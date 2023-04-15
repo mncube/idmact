@@ -23,3 +23,49 @@ test_that("adjust_raw_scores works", {
   # Test that a total of 60 was added to Score (three for each row)
   expect_equal(sum(df$Score3), sum(df$Score) + 60)
 })
+
+test_that("map_scores works", {
+
+  #Test with df = NULL
+
+  bij_scale <- map_scores(conv = list(1, 2, 3, 4, 5),
+                             map_raw = list(1, 2, 3, 4, 5),
+                             map_scale = list(20, 21, 22, 23, 24))
+
+
+  expect_equal(sum(do.call(c, bij_scale)), 110)
+  expect_equal(length(bij_scale), 5)
+
+  overmax_scale <- map_scores(conv = list(1, 2, 3, 4, 6),
+                          map_raw = list(1, 2, 3, 4, 5),
+                          map_scale = list(20, 21, 22, 23, 24))
+
+
+  expect_equal(sum(do.call(c, overmax_scale)), 110)
+  expect_equal(length(overmax_scale), 5)
+  expect_equal(max(unlist(overmax_scale)), 24)
+
+  # Test with df
+
+  # Create test data
+  df <- data.frame(Id = c(1:20),
+                   Score = rep(11:15, 4))
+
+
+  # Test on list maps
+  df$adjScale <- map_scores(df = df, conv = "Score",
+                            map_raw = list(11, 12, 13, 14, 15),
+                            map_scale = list(21, 22, 23, 24, 25))
+
+  expect_equal(sum(unlist(df$adjScale)), sum(unlist(df$Score)) + 200)
+
+  # Test on df colum maps
+  df$rawmap <- rep(11:15, 4)
+  df$scalemap <- rep(21:25, 4)
+  df$adjScale <- map_scores(df = df, conv = "Score",
+                            map_raw = "rawmap",
+                            map_scale = "scalemap")
+
+  expect_equal(sum(unlist(df$adjScale)), sum(unlist(df$Score)) + 200)
+
+})
