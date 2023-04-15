@@ -18,7 +18,8 @@ raw scores are stored.}
 A list
 }
 \description{
-idmact Helper Functions
+Increment raw score into an adjusted raw score as explained in step one of
+Schiel (1998).
 }
 \examples{
 # Create raw data
@@ -26,4 +27,8 @@ df <- data.frame(Id = list(1:20),
 RawScore = rep(11:15, 4))
 # Increment scores by 2
 df$AdjScore <- adjust_raw_scores(df, "RawScore", inc = 2)
+}
+\references{
+Schiel, J. Interpreting Differences Between Mean ACT Assessment Scores (1998)
+\url{https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf}
 }
