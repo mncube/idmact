@@ -2,7 +2,7 @@
 % Please edit documentation in R/idmact_helpers.R
 \name{adjust_raw_scores}
 \alias{adjust_raw_scores}
-\title{idmact Helper Functions}
+\title{Convert raw scores to adjusted raw scores}
 \usage{
 adjust_raw_scores(df = NULL, raw, inc = 1)
 }
@@ -18,8 +18,7 @@ raw scores are stored.}
 A list
 }
 \description{
-Increment raw score into an adjusted raw score as explained in step one of
-Schiel (1998).
+Convert raw scores to adjusted raw scores
 }
 \examples{
 # Create raw data
@@ -27,8 +26,4 @@ df <- data.frame(Id = list(1:20),
 RawScore = rep(11:15, 4))
 # Increment scores by 2
 df$AdjScore <- adjust_raw_scores(df, "RawScore", inc = 2)
-}
-\references{
-Schiel, J. Interpreting Differences Between Mean ACT Assessment Scores (1998)
-\url{https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf}
 }

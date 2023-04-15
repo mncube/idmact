@@ -1,7 +1,4 @@
-#' idmact Helper Functions
-#'
-#' Increment raw score into an adjusted raw score as explained in step one of
-#' Schiel (1998).
+#' Convert raw scores to adjusted raw scores
 #'
 #' @param df A data frame
 #' @param raw A list of raw scores or the quoted data frame column name where
@@ -10,11 +7,6 @@
 #'
 #' @return A list
 #' @export
-#'
-#' @references
-#'
-#' Schiel, J. Interpreting Differences Between Mean ACT Assessment Scores (1998)
-#' <https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf>
 #'
 #' @examples
 #' # Create raw data
