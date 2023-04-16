@@ -99,26 +99,28 @@ test_that("map_scores parameter checks work", {
                           map_scale = "scalemap"),
                "If conv is a quoted data frame column, it must be found in df and not in df_map.")
 
-  # # map_raw and map_scale (if column names) are found in the same data frame
-  # df <- data.frame(Id = c(1:20),
-  #                  Score = rep(11:15, 4),
-  #                  scalemap = rep(21:25, 4))
-  # df_map <- data.frame(rawmap = rep(11:15, 4))
-  #
-  # expect_error(map_scores(df = df, df_map = df_map, conv = "Score",
-  #                         map_raw = "rawmap",
-  #                         map_scale = "scalemap"),
-  #              "If map_raw and map_scale are both quoted data frame columns, they must be found in the same data frame (either df or df_map).")
+  # map_raw and map_scale (if column names) are found in the same data frame
+  df <- data.frame(Id = c(1:20),
+                   Score = rep(11:15, 4),
+                   scalemap = rep(21:25, 4))
+  df_map <- data.frame(rawmap = rep(11:15, 4))
 
-  # # Check that map_raw/map_scale is only in one data frame
-  # df <- data.frame(Id = c(1:20),
-  #                  Score = rep(11:15, 4),
-  #                  scalemap = rep(21:25, 4))
-  # df_map <- data.frame(rawmap = rep(11:15, 4),
-  #                      scalemap = rep(21:25, 4))
-  # expect_error(map_scores(df = df, df_map = df_map, conv = "Score",
-  #            map_raw = "rawmap",
-  #            map_scale = "scalemap"),
-  #            "If map_raw and/or map_scale is a quoted data frame column, it must be found in only one data frame (either df or df_map).")
+  expect_error(map_scores(df = df, df_map = df_map, conv = "Score",
+                          map_raw = "rawmap",
+                          map_scale = "scalemap"),
+               "If map_raw and map_scale are both quoted data frame columns, they must be found in the same data frame (either df or df_map).",
+               fixed = TRUE)
+
+  # Check that map_raw/map_scale is only in one data frame
+  df <- data.frame(Id = c(1:20),
+                   Score = rep(11:15, 4),
+                   scalemap = rep(21:25, 4))
+  df_map <- data.frame(rawmap = rep(11:15, 4),
+                       scalemap = rep(21:25, 4))
+  expect_error(map_scores(df = df, df_map = df_map, conv = "Score",
+             map_raw = "rawmap",
+             map_scale = "scalemap"),
+             "If map_raw and/or map_scale is a quoted data frame column, it must be found in only one data frame (either df or df_map).",
+             fixed = TRUE)
 
 })
