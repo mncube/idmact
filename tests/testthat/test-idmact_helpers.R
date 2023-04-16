@@ -59,10 +59,21 @@ test_that("map_scores works", {
 
   expect_equal(sum(unlist(df$adjScale)), sum(unlist(df$Score)) + 200)
 
-  # Test on df colum maps
+  # Test on df column maps
   df$rawmap <- rep(11:15, 4)
   df$scalemap <- rep(21:25, 4)
   df$adjScale <- map_scores(df = df, conv = "Score",
+                            map_raw = "rawmap",
+                            map_scale = "scalemap")
+
+  expect_equal(sum(unlist(df$adjScale)), sum(unlist(df$Score)) + 200)
+
+  # Test on df-maps
+  df <- data.frame(Id = c(1:20),
+                   Score = rep(11:15, 4))
+  df_map <- data.frame(rawmap = rep(11:15, 4),
+                       scalemap = rep(21:25, 4))
+  df$adjScale <- map_scores(df = df, df_map = df_map, conv = "Score",
                             map_raw = "rawmap",
                             map_scale = "scalemap")
 

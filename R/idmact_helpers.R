@@ -23,33 +23,44 @@ adjust_raw_scores <- function(df = NULL, raw, inc = 1){
 
 }
 
-map_scores <- function(df = NULL, conv, map_raw, map_scale) {
+map_scores <- function(df = NULL, df_map = NULL, conv, map_raw, map_scale) {
 
-  # Create mapper function to help map raw scores to scale scores
-  # mapper <- function(x, map_raw, map_scale) {
-  #   sapply(x, function(score) {
-  #     idx <- which(map_raw == score)
-  #     if (length(idx) > 0) {
-  #       return(map_scale[idx])
-  #     } else {
-  #       return(NA)
-  #     }
-  #   })
-  # }
+  # Helper function: Get information based on provided parametr values
+  map_out <- function(map_obj, func = "max"){
 
+    if (func == "max"){
+      if (is.list(map_obj)){
+        out <- max(unlist(map_obj))
+      } else {
+        if (is.null(df_map)){
+          out <- max(df[[map_obj]])
+        } else {
+          out <- max(df_map[[map_obj]])
+        }
+      }
+    }
+
+    if (func == "get"){
+      if (is.list(map_obj)){
+        out <- map_obj
+      } else {
+        if (is.null(df_map)){
+          out <- as.list(unique(df[[map_obj]]))
+        } else {
+          out <- as.list(unique(df_map[[map_obj]]))
+        }
+      }
+    }
+    return(out)
+  }
+
+  #Helper function: Map scores
   mapper <- function(x, map_raw, map_scale) {
-    if (is.list(map_raw)){
-      max_raw <- max(unlist(map_raw))
-    } else {
-      max_raw <- max(df[[map_raw]])
-    }
+    #Get max values
+    max_raw <- map_out(map_raw, func = "max")
+    max_scale <- map_out(map_scale, func = "max")
 
-    if (is.list(map_scale)){
-      max_scale <- max(unlist(map_scale))
-    } else {
-      max_scale <- max(df[[map_scale]])
-    }
-
+    #Map scores
       sapply(x, function(score) {
         if (score > max_raw) {
           return(max_scale)
@@ -64,19 +75,10 @@ map_scores <- function(df = NULL, conv, map_raw, map_scale) {
       })
   }
 
-  # Get map_raw_values based on input type
-  if (is.list(map_raw)){
-    map_raw_values <- map_raw
-  } else {
-    map_raw_values <- as.list(unique(df[[map_raw]]))
-  }
+  # Get map between raw and scale values
+  map_raw_values <- map_out(map_raw, func = "get")
+  map_scale_values <- map_out(map_scale, func = "get")
 
-  # Get map_scale_values based on input type
-  if (is.list(map_scale)){
-    map_scale_values <- map_scale
-  } else {
-    map_scale_values <- as.list(unique(df[[map_scale]]))
-  }
 
   # Map scores based on input type
   if (is.null(df)) {
