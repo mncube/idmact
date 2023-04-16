@@ -23,7 +23,48 @@ adjust_raw_scores <- function(df = NULL, raw, inc = 1){
 
 }
 
+#' Convert Raw Scores to Scale Scores
+#'
+#' @param df A data frame containing raw scores (optional)
+#' @param df_map A data frame containing the map between raw and scale scores
+#' @param conv A list of raw scores or the column name (quoted) of the scores in df
+#' @param map_raw A list containing the domain of raw scores for the raw score to
+#' scale score map, or the corresponding column name (quoted) in df or df_map
+#' @param map_scale A list containing the image of scale scores for the raw score
+#' to scale score map, or the corresponding column name (quoted) in df or df_map
+#'
+#' @return A list (if conv is a list) or a data frame (if conv is a column name)
+#' @export
+#'
+#' @examples
+#' (bij_scale <- map_scores(conv = list(1, 2, 3, 4, 5),
+#'                         map_raw = list(1, 2, 3, 4, 5),
+#'                         map_scale = list(20, 21, 22, 23, 24)))
 map_scores <- function(df = NULL, df_map = NULL, conv, map_raw, map_scale) {
+
+  # Check that map_raw and map_scale are the same length
+  if (length(map_raw) != length(map_scale)) {
+    rlang::abort("map_raw and map_scale must have the same length.")
+  }
+
+  # Check that if conv is a quoted data frame column, it is found in df and not in df_map
+  if (is.character(conv) && (is.null(df) || !conv %in% names(df) || (conv %in% names(df_map)))) {
+    rlang::abort("If conv is a quoted data frame column, it must be found in df and not in df_map.")
+  }
+
+  # Check that if map_raw and map_scale are both quoted data frame columns, they are found in the same data frame (either df or df_map)
+  if (is.character(map_raw) && is.character(map_scale)) {
+    if (!((map_raw %in% names(df) && map_scale %in% names(df)) || (map_raw %in% names(df_map) && map_scale %in% names(df_map)))) {
+      rlang::abort("If map_raw and map_scale are both quoted data frame columns, they must be found in the same data frame (either df or df_map).")
+    }
+  }
+
+  # Check that if map_raw and/or map_scale is a quoted data frame column, it is only found in one data frame (either df or df_map)
+  for (arg in list(map_raw, map_scale)) {
+    if (is.character(arg) && arg %in% names(df) && arg %in% names(df_map)) {
+      rlang::abort("If map_raw and/or map_scale is a quoted data frame column, it must be found in only one data frame (either df or df_map).")
+    }
+  }
 
   # Helper function: Get information based on provided parametr values
   map_out <- function(map_obj, func = "max"){

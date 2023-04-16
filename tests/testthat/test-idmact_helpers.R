@@ -80,3 +80,45 @@ test_that("map_scores works", {
   expect_equal(sum(unlist(df$adjScale)), sum(unlist(df$Score)) + 200)
 
 })
+
+test_that("map_scores parameter checks work", {
+  # Mismatched map size
+  expect_error(map_scores(conv = list(1, 2, 3, 4, 5),
+                          map_raw = list(1, 2, 3, 4),
+                          map_scale = list(20, 21, 22, 23, 24)),
+               "map_raw and map_scale must have the same length.")
+
+  # conv (if a data frame column) is found in the correct column
+  df <- data.frame(Id = c(1:20),
+                   Score = rep(11:15, 4))
+  df_map <- data.frame(rawmap = rep(11:15, 4),
+                       scalemap = rep(21:25, 4),
+                       Score = rep(11:15, 4))
+  expect_error(map_scores(df = df, df_map = df_map, conv = "Score",
+                          map_raw = "rawmap",
+                          map_scale = "scalemap"),
+               "If conv is a quoted data frame column, it must be found in df and not in df_map.")
+
+  # # map_raw and map_scale (if column names) are found in the same data frame
+  # df <- data.frame(Id = c(1:20),
+  #                  Score = rep(11:15, 4),
+  #                  scalemap = rep(21:25, 4))
+  # df_map <- data.frame(rawmap = rep(11:15, 4))
+  #
+  # expect_error(map_scores(df = df, df_map = df_map, conv = "Score",
+  #                         map_raw = "rawmap",
+  #                         map_scale = "scalemap"),
+  #              "If map_raw and map_scale are both quoted data frame columns, they must be found in the same data frame (either df or df_map).")
+
+  # # Check that map_raw/map_scale is only in one data frame
+  # df <- data.frame(Id = c(1:20),
+  #                  Score = rep(11:15, 4),
+  #                  scalemap = rep(21:25, 4))
+  # df_map <- data.frame(rawmap = rep(11:15, 4),
+  #                      scalemap = rep(21:25, 4))
+  # expect_error(map_scores(df = df, df_map = df_map, conv = "Score",
+  #            map_raw = "rawmap",
+  #            map_scale = "scalemap"),
+  #            "If map_raw and/or map_scale is a quoted data frame column, it must be found in only one data frame (either df or df_map).")
+
+})
