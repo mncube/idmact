@@ -42,9 +42,7 @@ idmact_subj <- function(df = NULL, df_map = NULL, raw,
   }
 
 
-  # Mean scale scores
-  # m_unadj_scale <- mean(unlist(unadj_scale))
-  # m_adj_scale <- mean(unlist(adj_scale))
+  # Summarize scale scores
   m_unadj_scale <- do.call(mcent, c(list(unlist(unadj_scale)), na.rm = na.rm.mcent))
   m_adj_scale <- do.call(mcent, c(list(unlist(adj_scale)), na.rm = na.rm.mcent))
 
