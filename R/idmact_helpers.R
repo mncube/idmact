@@ -32,6 +32,8 @@ adjust_raw_scores <- function(df = NULL, raw, inc = 1){
 #' scale score map, or the corresponding column name (quoted) in df or df_map
 #' @param map_scale A list containing the image of scale scores for the raw score
 #' to scale score map, or the corresponding column name (quoted) in df or df_map
+#' @param na.rm.max Pass na.rm argument to max in order to compute maximum raw
+#' and scale values of the map
 #'
 #' @return A list (if conv is a list) or a data frame (if conv is a column name)
 #' @export
@@ -40,7 +42,8 @@ adjust_raw_scores <- function(df = NULL, raw, inc = 1){
 #' (bij_scale <- map_scores(conv = list(1, 2, 3, 4, 5),
 #'                         map_raw = list(1, 2, 3, 4, 5),
 #'                         map_scale = list(20, 21, 22, 23, 24)))
-map_scores <- function(df = NULL, df_map = NULL, conv, map_raw, map_scale) {
+map_scores <- function(df = NULL, df_map = NULL, conv, map_raw, map_scale,
+                       na.rm.max = TRUE) {
 
   # Check that map_raw and map_scale are the same length
   if (length(map_raw) != length(map_scale)) {
@@ -71,12 +74,12 @@ map_scores <- function(df = NULL, df_map = NULL, conv, map_raw, map_scale) {
 
     if (func == "max"){
       if (is.list(map_obj)){
-        out <- max(unlist(map_obj))
+        out <- max(unlist(map_obj), na.rm = na.rm.max)
       } else {
         if (is.null(df_map)){
-          out <- max(df[[map_obj]])
+          out <- max(df[[map_obj]], na.rm = na.rm.max)
         } else {
-          out <- max(df_map[[map_obj]])
+          out <- max(df_map[[map_obj]], na.rm = na.rm.max)
         }
       }
     }
@@ -103,7 +106,9 @@ map_scores <- function(df = NULL, df_map = NULL, conv, map_raw, map_scale) {
 
     #Map scores
       sapply(x, function(score) {
-        if (score > max_raw) {
+        if (is.na(score)){
+          return(NA)
+        } else if (score > max_raw) {
           return(max_scale)
         } else {
           idx <- which(map_raw == score)

@@ -4,7 +4,14 @@
 \alias{map_scores}
 \title{Convert Raw Scores to Scale Scores}
 \usage{
-map_scores(df = NULL, df_map = NULL, conv, map_raw, map_scale)
+map_scores(
+  df = NULL,
+  df_map = NULL,
+  conv,
+  map_raw,
+  map_scale,
+  na.rm.max = TRUE
+)
 }
 \arguments{
 \item{df}{A data frame containing raw scores (optional)}
@@ -18,6 +25,9 @@ scale score map, or the corresponding column name (quoted) in df or df_map}
 
 \item{map_scale}{A list containing the image of scale scores for the raw score
 to scale score map, or the corresponding column name (quoted) in df or df_map}
+
+\item{na.rm.max}{Pass na.rm argument to max in order to compute maximum raw
+and scale values of the map}
 }
 \value{
 A list (if conv is a list) or a data frame (if conv is a column name)
