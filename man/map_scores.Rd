@@ -14,23 +14,28 @@ map_scores(
 )
 }
 \arguments{
-\item{df}{A data frame containing raw scores (optional)}
+\item{df}{An optional data frame containing a variable for raw scores}
 
-\item{df_map}{A data frame containing the map between raw and scale scores}
+\item{df_map}{A data frame that maps raw scores to their corresponding scale
+scores}
 
-\item{conv}{A list of raw scores or the column name (quoted) of the scores in df}
+\item{conv}{A list of raw scores, or a quoted column name from the data frame
+where raw scores are stored.}
 
-\item{map_raw}{A list containing the domain of raw scores for the raw score to
-scale score map, or the corresponding column name (quoted) in df or df_map}
+\item{map_raw}{A list containing the domain of raw scores for the raw-to-scale
+score mapping, or a quoted column name from either df or df_map that represents
+this domain}
 
-\item{map_scale}{A list containing the image of scale scores for the raw score
-to scale score map, or the corresponding column name (quoted) in df or df_map}
+\item{map_scale}{A list containing the range of scale scores for the
+raw-to-scale score mapping, or a quoted column name from either df or df_map
+that represents this range}
 
-\item{na.rm.max}{Pass na.rm argument to max in order to compute maximum raw
-and scale values of the map}
+\item{na.rm.max}{Pass the na.rm argument to the max function for computing the
+maximum raw and scale values in the mapping, taking into account the handling
+of missing values}
 }
 \value{
-A list (if conv is a list) or a data frame (if conv is a column name)
+A list if 'conv' is a list, or a data frame if 'conv' is a column name
 }
 \description{
 Convert Raw Scores to Scale Scores

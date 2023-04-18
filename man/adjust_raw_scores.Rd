@@ -7,15 +7,16 @@
 adjust_raw_scores(df = NULL, raw, inc = 1)
 }
 \arguments{
-\item{df}{A data frame}
+\item{df}{An optional data frame containing a variable for raw scores}
 
-\item{raw}{A list of raw scores or the quoted data frame column name where
-raw scores are stored.}
+\item{raw}{A list of raw scores, or a quoted column name from the data frame
+where raw scores are stored.}
 
-\item{inc}{Increment raw scores by inc to obtain adjusted scores}
+\item{inc}{A value used to increment raw scores in order to calculate adjusted
+scores}
 }
 \value{
-A list
+A list of adjusted raw scores
 }
 \description{
 Convert raw scores to adjusted raw scores
