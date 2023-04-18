@@ -11,8 +11,8 @@ idmact_subj(
   inc = 1,
   map_raw,
   map_scale,
-  mcent = "mean",
-  na.rm.mcent = TRUE
+  mcent_subj = "mean",
+  na.rm.mcent_subj = TRUE
 )
 }
 \arguments{
@@ -31,9 +31,9 @@ scale score map, or the corresponding column name (quoted) in df or df_map}
 \item{map_scale}{A list containing the image of scale scores for the raw score
 to scale score map, or the corresponding column name (quoted) in df or df_map}
 
-\item{mcent}{A measure of central tendency}
+\item{mcent_subj}{A measure of central tendency}
 
-\item{na.rm.mcent}{Pass na.rm argument to function selected with mcent in order
+\item{na.rm.mcent_subj}{Pass na.rm argument to function selected with mcent_subj in order
 to summarize scale score}
 }
 \value{

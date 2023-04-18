@@ -1,8 +1,9 @@
 idmact_comp <- function(df = NULL, df_map = NULL, raw,
-                        inc, map_raw, map_scale, mcent = "mean",
-                        na.rm.mcent = TRUE,
-                        mcent.comp = "mean",
-                        na.rm.mcent.comp = TRUE){
+                        inc, map_raw, map_scale, mcent_subj = "mean",
+                        na.rm.mcent_subj = TRUE,
+                        mcent_obs = function(x) round(sum(x) / length(x)),
+                        mcent_comp = "mean",
+                        na.rm.mcent_comp = TRUE){
 
   # Find the maximum length among raw, inc, map_raw, and map_scale
   max_len <- max(length(raw), length(inc), length(map_raw), length(map_scale))
@@ -34,7 +35,7 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
     subj_results <- idmact_subj(df, df_map, raw = raw[[subj]],
                                 inc = inc[[subj]], map_raw = map_raw[[subj]],
                                 map_scale = map_scale[[subj]],
-                                mcent = mcent, na.rm.mcent = na.rm.mcent)
+                                mcent_subj = mcent_subj, na.rm.mcent_subj = na.rm.mcent_subj)
 
     # Store results for each subject
     betas[[subj]] <- subj_results$betas
@@ -45,12 +46,12 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
   }
 
   # Calculate composite score for each examinee
-    adj_comp_scores <- apply(sapply(adj_scale_scores, unlist), 1, function(x) round(sum(x) / length(x)))
-    unadj_comp_scores <- apply(sapply(unadj_scale_scores, unlist), 1, function(x) round(sum(x) / length(x)))
+    adj_comp_scores <- apply(sapply(adj_scale_scores, unlist), 1, mcent_obs)
+    unadj_comp_scores <- apply(sapply(unadj_scale_scores, unlist), 1, mcent_obs)
 
   # Calculate the adjusted and unadjusted mean ACT Composite scale score
-  m_adj_comp <- do.call(mcent.comp, c(list(adj_comp_scores), na.rm = na.rm.mcent.comp))
-  m_unadj_comp <- do.call(mcent.comp, c(list(unadj_comp_scores), na.rm = na.rm.mcent.comp))
+  m_adj_comp <- do.call(mcent_comp, c(list(adj_comp_scores), na.rm = na.rm.mcent_comp))
+  m_unadj_comp <- do.call(mcent_comp, c(list(unadj_comp_scores), na.rm = na.rm.mcent_comp))
 
   # Calculate the difference between the adjusted and unadjusted mean Composite scores
   beta_comp <- m_adj_comp - m_unadj_comp
