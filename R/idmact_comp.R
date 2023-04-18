@@ -1,3 +1,40 @@
+#' Interpreting Composite Differences in Mean ACT Scores
+#'
+#' @param df A data frame containing raw scores (optional)
+#' @param df_map A data frame containing the map between raw and scale scores
+#' @param raw A nested list of raw scores or the list of quoted data frame column
+#' name where raw scores for each subject are stored.
+#' @param inc A list of numbers. Increment raw scores for each subject by inc to
+#' obtain adjusted scores
+#' @param map_raw A nested list containing the domain of raw scores for each subject's
+#' raw score to scale score map, or the corresponding list of column names (quoted)
+#' in df or df_map
+#' @param map_scale A nested list containing the image of scale scores for each
+#' subject's raw score to scale score map, or the corresponding list of column
+#' names (quoted) in df or df_map
+#' @param mcent_subj A measure of central tendency to summarize subject level
+#' scale scores
+#' @param na.rm.mcent_subj Pass na.rm argument to function selected with mcent_subj
+#' in order to summarize subject level scale scores
+#' @param mcent_obs An anonymous function to summarize observation level
+#' scale scores (i.e., summary within observation/examinee across subjects)
+#' @param mcent_comp A measure of central tendency to summarize composite level
+#' scale scores (i.e., summarize exam level scale score across observations)
+#' @param na.rm.mcent_comp Pass na.rm argument to function selected with mcent_comp
+#' in order to summarize subject level scale scores
+#'
+#' @return A nested list
+#' @export
+#'
+#' @examples
+#' raw = list(list(1, 2, 3, 4, 5), list(1, 1, 1, 1, 1))
+#' inc = list(1 , 1)
+#' map_raw = list(list(1, 2, 3, 4, 5))
+#' map_scale = list(list(20, 21, 22, 23, 24))
+#' comp_mean <- idmact_comp(raw = raw,
+#'                          inc = inc,
+#'                          map_raw = map_raw,
+#'                          map_scale = map_scale)
 idmact_comp <- function(df = NULL, df_map = NULL, raw,
                         inc, map_raw, map_scale, mcent_subj = "mean",
                         na.rm.mcent_subj = TRUE,
