@@ -9,9 +9,7 @@
 #' scale score map, or the corresponding column name (quoted) in df or df_map
 #' @param map_scale A list containing the image of scale scores for the raw score
 #' to scale score map, or the corresponding column name (quoted) in df or df_map
-#' @param mcent_subj A measure of central tendency
-#' @param na.rm.mcent_subj Pass na.rm argument to function selected with mcent_subj in order
-#' to summarize scale score
+#' @param mcent_subj An anonymous function defining the measure of central tendency
 #'
 #' @return A list containing betas, scale score summary (adjusted and unadjusted),
 #' scale scores (adjusted and unadjusted), and raw scores (adjusted nd unadjusted)
@@ -25,8 +23,7 @@
 #'             map_raw = map_raw,
 #'             map_scale = map_scale)
 idmact_subj <- function(df = NULL, df_map = NULL, raw,
-                        inc = 1, map_raw, map_scale, mcent_subj = "mean",
-                        na.rm.mcent_subj = TRUE){
+                        inc = 1, map_raw, map_scale, mcent_subj = function(x) mean(x, na.rm = TRUE)){
 
   # Adjusted raw scores
   adj <- adjust_raw_scores(df, raw , inc)
@@ -43,8 +40,8 @@ idmact_subj <- function(df = NULL, df_map = NULL, raw,
 
 
   # Summarize scale scores
-  m_unadj_scale <- do.call(mcent_subj, c(list(unlist(unadj_scale)), na.rm = na.rm.mcent_subj))
-  m_adj_scale <- do.call(mcent_subj, c(list(unlist(adj_scale)), na.rm = na.rm.mcent_subj))
+  m_unadj_scale <- do.call(mcent_subj, list(unlist(unadj_scale)))
+  m_adj_scale <- do.call(mcent_subj, list(unlist(adj_scale)))
 
   # Beta subject
   betas <- m_adj_scale - m_unadj_scale

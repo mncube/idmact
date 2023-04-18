@@ -11,11 +11,9 @@ idmact_comp(
   inc,
   map_raw,
   map_scale,
-  mcent_subj = "mean",
-  na.rm.mcent_subj = TRUE,
+  mcent_subj = function(x) mean(x, na.rm = TRUE),
   mcent_obs = function(x) round(sum(x)/length(x)),
-  mcent_comp = "mean",
-  na.rm.mcent_comp = TRUE
+  mcent_comp = function(x) mean(x, na.rm = TRUE)
 )
 }
 \arguments{
@@ -40,17 +38,12 @@ names (quoted) in df or df_map}
 \item{mcent_subj}{A measure of central tendency to summarize subject level
 scale scores}
 
-\item{na.rm.mcent_subj}{Pass na.rm argument to function selected with mcent_subj
-in order to summarize subject level scale scores}
-
 \item{mcent_obs}{An anonymous function to summarize observation level
 scale scores (i.e., summary within observation/examinee across subjects)}
 
-\item{mcent_comp}{A measure of central tendency to summarize composite level
-scale scores (i.e., summarize exam level scale score across observations)}
-
-\item{na.rm.mcent_comp}{Pass na.rm argument to function selected with mcent_comp
-in order to summarize subject level scale scores}
+\item{mcent_comp}{A anonymous function defining the measure of central tendency
+used to summarize composite level scale scores (i.e., summarize exam level scale
+score across observations)}
 }
 \value{
 A nested list

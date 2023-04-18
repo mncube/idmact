@@ -14,14 +14,11 @@
 #' names (quoted) in df or df_map
 #' @param mcent_subj A measure of central tendency to summarize subject level
 #' scale scores
-#' @param na.rm.mcent_subj Pass na.rm argument to function selected with mcent_subj
-#' in order to summarize subject level scale scores
 #' @param mcent_obs An anonymous function to summarize observation level
 #' scale scores (i.e., summary within observation/examinee across subjects)
-#' @param mcent_comp A measure of central tendency to summarize composite level
-#' scale scores (i.e., summarize exam level scale score across observations)
-#' @param na.rm.mcent_comp Pass na.rm argument to function selected with mcent_comp
-#' in order to summarize subject level scale scores
+#' @param mcent_comp A anonymous function defining the measure of central tendency
+#' used to summarize composite level scale scores (i.e., summarize exam level scale
+#' score across observations)
 #'
 #' @return A nested list
 #' @export
@@ -36,11 +33,10 @@
 #'                          map_raw = map_raw,
 #'                          map_scale = map_scale)
 idmact_comp <- function(df = NULL, df_map = NULL, raw,
-                        inc, map_raw, map_scale, mcent_subj = "mean",
-                        na.rm.mcent_subj = TRUE,
+                        inc, map_raw, map_scale,
+                        mcent_subj = function(x) mean(x, na.rm = TRUE),
                         mcent_obs = function(x) round(sum(x) / length(x)),
-                        mcent_comp = "mean",
-                        na.rm.mcent_comp = TRUE){
+                        mcent_comp = function(x) mean(x, na.rm = TRUE)){
 
   # Find the maximum length among raw, inc, map_raw, and map_scale
   max_len <- max(length(raw), length(inc), length(map_raw), length(map_scale))
@@ -72,7 +68,7 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
     subj_results <- idmact_subj(df, df_map, raw = raw[[subj]],
                                 inc = inc[[subj]], map_raw = map_raw[[subj]],
                                 map_scale = map_scale[[subj]],
-                                mcent_subj = mcent_subj, na.rm.mcent_subj = na.rm.mcent_subj)
+                                mcent_subj = mcent_subj)
 
     # Store results for each subject
     betas[[subj]] <- subj_results$betas
@@ -86,11 +82,11 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
     adj_comp_scores <- apply(sapply(adj_scale_scores, unlist), 1, mcent_obs)
     unadj_comp_scores <- apply(sapply(unadj_scale_scores, unlist), 1, mcent_obs)
 
-  # Calculate the adjusted and unadjusted mean ACT Composite scale score
-  m_adj_comp <- do.call(mcent_comp, c(list(adj_comp_scores), na.rm = na.rm.mcent_comp))
-  m_unadj_comp <- do.call(mcent_comp, c(list(unadj_comp_scores), na.rm = na.rm.mcent_comp))
+  # Calculate the adjusted and unadjusted mcent ACT Composite scale score
+  m_adj_comp <- do.call(mcent_comp, list(adj_comp_scores))
+  m_unadj_comp <- do.call(mcent_comp, list(unadj_comp_scores))
 
-  # Calculate the difference between the adjusted and unadjusted mean Composite scores
+  # Calculate the difference between the adjusted and unadjusted mcent Composite scores
   beta_comp <- m_adj_comp - m_unadj_comp
 
   # Output object

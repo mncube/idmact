@@ -56,7 +56,7 @@ test_that("idmact_subj works", {
   expect_equal(idmact_subj(raw = raw,
                            map_raw = map_raw,
                            map_scale = map_scale,
-                           mcent = "median")$beta, 1)
+                           mcent = function(x)median(x, na.rm = TRUE))$beta, 1)
 
 
 })
