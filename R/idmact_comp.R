@@ -1,6 +1,8 @@
 idmact_comp <- function(df = NULL, df_map = NULL, raw,
                         inc, map_raw, map_scale, mcent = "mean",
-                        na.rm.mcent = TRUE){
+                        na.rm.mcent = TRUE,
+                        mcent.comp = "mean",
+                        na.rm.mcent.comp = TRUE){
 
   # Find the maximum length among raw, inc, map_raw, and map_scale
   max_len <- max(length(raw), length(inc), length(map_raw), length(map_scale))
@@ -46,11 +48,9 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
     adj_comp_scores <- apply(sapply(adj_scale_scores, unlist), 1, function(x) round(sum(x) / length(x)))
     unadj_comp_scores <- apply(sapply(unadj_scale_scores, unlist), 1, function(x) round(sum(x) / length(x)))
 
-
-
   # Calculate the adjusted and unadjusted mean ACT Composite scale score
-  m_adj_comp <- mean(adj_comp_scores, na.rm = na.rm.mcent)
-  m_unadj_comp <- mean(unadj_comp_scores, na.rm = na.rm.mcent)
+  m_adj_comp <- do.call(mcent.comp, c(list(adj_comp_scores), na.rm = na.rm.mcent.comp))
+  m_unadj_comp <- do.call(mcent.comp, c(list(unadj_comp_scores), na.rm = na.rm.mcent.comp))
 
   # Calculate the difference between the adjusted and unadjusted mean Composite scores
   beta_comp <- m_adj_comp - m_unadj_comp
@@ -62,7 +62,6 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
               "subject_results" = betas,
               "composite_scores" = list("adj" = adj_comp_scores,
                                         "unadj" = unadj_comp_scores))
-
 
   # Return output
   return(out)
