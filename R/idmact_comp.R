@@ -55,9 +55,10 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
   map_scale <- recycle_param(map_scale, max_len)
 
   # Initialize lists to store results for each subject
-  betas <- list()
-  m_scale_adj <- list()
-  m_scale_unadj <- list()
+  # betas <- list()
+  # m_scale_adj <- list()
+  # m_scale_unadj <- list()
+  subjr <- list()
   adj_scale_scores <- list()
   unadj_scale_scores <- list()
 
@@ -71,9 +72,10 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
                                 mcent_subj = mcent_subj)
 
     # Store results for each subject
-    betas[[subj]] <- subj_results$betas
-    m_scale_adj[[subj]] <- subj_results$m_scale$adj
-    m_scale_unadj[[subj]] <- subj_results$m_scale$unadj
+    # betas[[subj]] <- subj_results$betas
+    # m_scale_adj[[subj]] <- subj_results$m_scale$adj
+    # m_scale_unadj[[subj]] <- subj_results$m_scale$unadj
+    subjr[[subj]] <- subj_results
     adj_scale_scores[[subj]] <- subj_results$scale$adj
     unadj_scale_scores[[subj]] <- subj_results$scale$unadj
   }
@@ -90,12 +92,12 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
   beta_comp <- m_adj_comp - m_unadj_comp
 
   # Output object
-  out <- list("beta_comp" = beta_comp,
-              "m_comp" = list("adj" = m_adj_comp,
-                              "unadj" = m_unadj_comp),
-              "subject_results" = betas,
-              "composite_scores" = list("adj" = adj_comp_scores,
-                                        "unadj" = unadj_comp_scores))
+  out <- list("composite_results" = list("betac" = beta_comp,
+                                         "mscale" = list("adj" = m_adj_comp,
+                                                         "unadj" = m_unadj_comp),
+                                         "scale" = list("adj" = adj_comp_scores,
+                                                        "unadj" = unadj_comp_scores)),
+              "subject_results" = subjr)
 
   # Return output
   return(out)

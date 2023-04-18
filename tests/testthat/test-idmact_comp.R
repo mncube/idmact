@@ -1,4 +1,5 @@
 test_that("idmact_comp works", {
+  # Use all list inputs
   # Inputs
   raw = list(list(1, 2, 3, 4, 5), list(1, 1, 1, 1, 1))
   inc = list(1 , 1)
@@ -15,18 +16,7 @@ test_that("idmact_comp works", {
                            map_raw = map_raw,
                            map_scale = map_scale)
 
-  expect_equal(comp_mean$beta_comp, 0.8)
-
-  # # Test that it works with round2
-  # comp_mean_r2 <- idmact_comp(raw = raw,
-  #                          inc = inc,
-  #                          map_raw = map_raw,
-  #                          map_scale = map_scale,
-  #                          rounder = "round2")
-  #
-  # expect_equal(comp_mean_r2$beta_comp, 0.8)
-
-
+  expect_equal(comp_mean$composite_results$betac, 0.8)
 
 
 })
