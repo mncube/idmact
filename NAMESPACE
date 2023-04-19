@@ -3,4 +3,6 @@
 export(adjust_raw_scores)
 export(idmact_comp)
 export(idmact_subj)
+export(map_elongate)
+export(map_elongate_df)
 export(map_scores)
