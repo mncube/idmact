@@ -2,7 +2,7 @@
 % Please edit documentation in R/idmact_subj.R
 \name{idmact_subj}
 \alias{idmact_subj}
-\title{Interpreting Subject Level Differences in Mean ACT Scores}
+\title{Interpreting Differences in Mean ACT Scores at the Subject Level}
 \usage{
 idmact_subj(
   df = NULL,
@@ -15,29 +15,35 @@ idmact_subj(
 )
 }
 \arguments{
-\item{df}{A data frame containing raw scores (optional)}
+\item{df}{An optional data frame containing a variable for raw scores}
 
-\item{df_map}{A data frame containing the map between raw and scale scores}
+\item{df_map}{A data frame that maps raw scores to their corresponding scale
+scores}
 
-\item{raw}{A list of raw scores or the quoted data frame column name where
-raw scores are stored.}
+\item{raw}{A list of raw scores, or a quoted column name from the data frame
+where raw scores are stored.}
 
-\item{inc}{Increment raw scores by inc to obtain adjusted scores}
+\item{inc}{A value used to increment raw scores in order to calculate adjusted
+scores}
 
-\item{map_raw}{A list containing the domain of raw scores for the raw score to
-scale score map, or the corresponding column name (quoted) in df or df_map}
+\item{map_raw}{A list containing the domain of raw scores for the raw-to-scale
+score mapping, or a quoted column name from either df or df_map that represents
+this domain}
 
-\item{map_scale}{A list containing the image of scale scores for the raw score
-to scale score map, or the corresponding column name (quoted) in df or df_map}
+\item{map_scale}{A list containing the range of scale scores for the
+raw-to-scale score mapping, or a quoted column name from either df or df_map
+that represents this range}
 
-\item{mcent_subj}{An anonymous function defining the measure of central tendency}
+\item{mcent_subj}{An anonymous function that defines the measure of central
+tendency to be used}
 }
 \value{
-A list containing betas, scale score summary (adjusted and unadjusted),
-scale scores (adjusted and unadjusted), and raw scores (adjusted nd unadjusted)
+A nested list containing betas, a summary of scale scores as a list
+(adjusted and unadjusted), a list of adjusted and unadjusted scale scores,
+and a list of adjusted and unadjusted raw scores
 }
 \description{
-Interpreting Subject Level Differences in Mean ACT Scores
+Interpreting Differences in Mean ACT Scores at the Subject Level
 }
 \examples{
 raw = list(1, 2, 3, 4, 5)

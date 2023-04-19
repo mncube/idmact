@@ -1,18 +1,24 @@
-#' Interpreting Subject Level Differences in Mean ACT Scores
+#' Interpreting Differences in Mean ACT Scores at the Subject Level
 #'
-#' @param df A data frame containing raw scores (optional)
-#' @param df_map A data frame containing the map between raw and scale scores
-#' @param raw A list of raw scores or the quoted data frame column name where
-#' raw scores are stored.
-#' @param inc Increment raw scores by inc to obtain adjusted scores
-#' @param map_raw A list containing the domain of raw scores for the raw score to
-#' scale score map, or the corresponding column name (quoted) in df or df_map
-#' @param map_scale A list containing the image of scale scores for the raw score
-#' to scale score map, or the corresponding column name (quoted) in df or df_map
-#' @param mcent_subj An anonymous function defining the measure of central tendency
+#' @param df An optional data frame containing a variable for raw scores
+#' @param df_map A data frame that maps raw scores to their corresponding scale
+#' scores
+#' @param raw A list of raw scores, or a quoted column name from the data frame
+#' where raw scores are stored.
+#' @param inc A value used to increment raw scores in order to calculate adjusted
+#' scores
+#' @param map_raw A list containing the domain of raw scores for the raw-to-scale
+#' score mapping, or a quoted column name from either df or df_map that represents
+#' this domain
+#' @param map_scale A list containing the range of scale scores for the
+#' raw-to-scale score mapping, or a quoted column name from either df or df_map
+#' that represents this range
+#' @param mcent_subj An anonymous function that defines the measure of central
+#' tendency to be used
 #'
-#' @return A list containing betas, scale score summary (adjusted and unadjusted),
-#' scale scores (adjusted and unadjusted), and raw scores (adjusted nd unadjusted)
+#' @return A nested list containing betas, a summary of scale scores as a list
+#' (adjusted and unadjusted), a list of adjusted and unadjusted scale scores,
+#' and a list of adjusted and unadjusted raw scores
 #' @export
 #'
 #' @examples
