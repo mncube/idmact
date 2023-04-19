@@ -2,7 +2,7 @@
 % Please edit documentation in R/idmact_comp.R
 \name{idmact_comp}
 \alias{idmact_comp}
-\title{Interpreting Composite Differences in Mean ACT Scores}
+\title{Interpreting Differences in Mean ACT Scores at the Composite Level}
 \usage{
 idmact_comp(
   df = NULL,
@@ -17,39 +17,46 @@ idmact_comp(
 )
 }
 \arguments{
-\item{df}{A data frame containing raw scores (optional)}
+\item{df}{An optional data frame containing a variable for raw scores}
 
-\item{df_map}{A data frame containing the map between raw and scale scores}
+\item{df_map}{A data frame that maps raw scores to their corresponding scale
+scores}
 
-\item{raw}{A nested list of raw scores or the list of quoted data frame column
-name where raw scores for each subject are stored.}
+\item{raw}{A list containing either a list of raw scores for each subject, or
+quoted column names from the data frame where raw scores for each subject are
+stored}
 
-\item{inc}{A list of numbers. Increment raw scores for each subject by inc to
-obtain adjusted scores}
+\item{inc}{A list of values used to increment raw scores for each subject, in
+order to calculate adjusted scores}
 
-\item{map_raw}{A nested list containing the domain of raw scores for each subject's
-raw score to scale score map, or the corresponding list of column names (quoted)
-in df or df_map}
+\item{map_raw}{A nested list where each sublist contains the domain of raw
+scores for a subject's raw-to-scale score mapping, or quoted column names from
+either df or df_map representing the subject area domains}
 
-\item{map_scale}{A nested list containing the image of scale scores for each
-subject's raw score to scale score map, or the corresponding list of column
-names (quoted) in df or df_map}
+\item{map_scale}{A nested list where each sublist contains the range of scale
+scores for a subject's raw-to-scale score mapping, or quoted column names from
+either df or df_map representing the subject area ranges}
 
-\item{mcent_subj}{A measure of central tendency to summarize subject level
-scale scores}
+\item{mcent_subj}{An anonymous function specifying the measure of central
+tendency used to summarize scale scores at the subject level}
 
-\item{mcent_obs}{An anonymous function to summarize observation level
-scale scores (i.e., summary within observation/examinee across subjects)}
+\item{mcent_obs}{An anonymous function used to summarize scale scores at the
+observation level (i.e., summary within each observation/examinee across
+subjects)}
 
-\item{mcent_comp}{A anonymous function defining the measure of central tendency
-used to summarize composite level scale scores (i.e., summarize exam level scale
-score across observations)}
+\item{mcent_comp}{An anonymous function defining the measure of central
+tendency used to summarize composite level scale scores (i.e., summarizing
+exam level scale scores across observations)}
 }
 \value{
-A nested list
+A nested list containing both composite and subject level results.
+Composite results include betac, a list of summarized composite scale scores
+(adjusted and unadjusted), and composite level scale scores (adjusted and
+unadjusted). Subject level results consist of the outcomes obtained from
+idmact_subj for each subject.
 }
 \description{
-Interpreting Composite Differences in Mean ACT Scores
+Interpreting Differences in Mean ACT Scores at the Composite Level
 }
 \examples{
 raw = list(list(1, 2, 3, 4, 5), list(1, 1, 1, 1, 1))

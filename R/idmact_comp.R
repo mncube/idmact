@@ -1,26 +1,34 @@
-#' Interpreting Composite Differences in Mean ACT Scores
+#' Interpreting Differences in Mean ACT Scores at the Composite Level
 #'
-#' @param df A data frame containing raw scores (optional)
-#' @param df_map A data frame containing the map between raw and scale scores
-#' @param raw A nested list of raw scores or the list of quoted data frame column
-#' name where raw scores for each subject are stored.
-#' @param inc A list of numbers. Increment raw scores for each subject by inc to
-#' obtain adjusted scores
-#' @param map_raw A nested list containing the domain of raw scores for each subject's
-#' raw score to scale score map, or the corresponding list of column names (quoted)
-#' in df or df_map
-#' @param map_scale A nested list containing the image of scale scores for each
-#' subject's raw score to scale score map, or the corresponding list of column
-#' names (quoted) in df or df_map
-#' @param mcent_subj A measure of central tendency to summarize subject level
-#' scale scores
-#' @param mcent_obs An anonymous function to summarize observation level
-#' scale scores (i.e., summary within observation/examinee across subjects)
-#' @param mcent_comp A anonymous function defining the measure of central tendency
-#' used to summarize composite level scale scores (i.e., summarize exam level scale
-#' score across observations)
+#' @param df An optional data frame containing a variable for raw scores
+#' @param df_map A data frame that maps raw scores to their corresponding scale
+#' scores
+#' @param raw A list containing either a list of raw scores for each subject, or
+#' quoted column names from the data frame where raw scores for each subject are
+#' stored
+#' @param inc A list of values used to increment raw scores for each subject, in
+#' order to calculate adjusted scores
+#' @param map_raw A nested list where each sublist contains the domain of raw
+#' scores for a subject's raw-to-scale score mapping, or quoted column names from
+#' either df or df_map representing the subject area domains
+#' @param map_scale A nested list where each sublist contains the range of scale
+#' scores for a subject's raw-to-scale score mapping, or quoted column names from
+#' either df or df_map representing the subject area ranges
+#' @param mcent_subj An anonymous function specifying the measure of central
+#' tendency used to summarize scale scores at the subject level
+#' @param mcent_obs An anonymous function used to summarize scale scores at the
+#' observation level (i.e., summary within each observation/examinee across
+#' subjects)
+#' @param mcent_comp An anonymous function defining the measure of central
+#' tendency used to summarize composite level scale scores (i.e., summarizing
+#' exam level scale scores across observations)
 #'
-#' @return A nested list
+#' @return A nested list containing both composite and subject level results.
+#' Composite results include betac, a list of summarized composite scale scores
+#' (adjusted and unadjusted), and composite level scale scores (adjusted and
+#' unadjusted). Subject level results consist of the outcomes obtained from
+#' idmact_subj for each subject.
+#'
 #' @export
 #'
 #' @examples
