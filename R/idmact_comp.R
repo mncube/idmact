@@ -24,7 +24,7 @@
 #' exam level scale scores across observations)
 #'
 #' @return A nested list containing both composite and subject level results.
-#' Composite results include betac, a list of summarized composite scale scores
+#' Composite results include deltac, a list of summarized composite scale scores
 #' (adjusted and unadjusted), and composite level scale scores (adjusted and
 #' unadjusted). Subject level results consist of the outcomes obtained from
 #' idmact_subj for each subject.
@@ -91,10 +91,10 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
   m_unadj_comp <- do.call(mcent_comp, list(unadj_comp_scores))
 
   # Calculate the difference between the adjusted and unadjusted mcent Composite scores
-  beta_comp <- m_adj_comp - m_unadj_comp
+  delta_comp <- m_adj_comp - m_unadj_comp
 
   # Output object
-  out <- list("composite_results" = list("betac" = beta_comp,
+  out <- list("composite_results" = list("deltac" = delta_comp,
                                          "mscale" = list("adj" = m_adj_comp,
                                                          "unadj" = m_unadj_comp),
                                          "scale" = list("adj" = adj_comp_scores,

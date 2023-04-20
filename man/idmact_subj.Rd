@@ -38,7 +38,7 @@ that represents this range}
 tendency to be used}
 }
 \value{
-A nested list containing betas, a summary of scale scores as a list
+A nested list containing deltas, a summary of scale scores as a list
 (adjusted and unadjusted), a list of adjusted and unadjusted scale scores,
 and a list of adjusted and unadjusted raw scores
 }

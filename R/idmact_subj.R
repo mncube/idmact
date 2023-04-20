@@ -16,7 +16,7 @@
 #' @param mcent_subj An anonymous function that defines the measure of central
 #' tendency to be used
 #'
-#' @return A nested list containing betas, a summary of scale scores as a list
+#' @return A nested list containing deltas, a summary of scale scores as a list
 #' (adjusted and unadjusted), a list of adjusted and unadjusted scale scores,
 #' and a list of adjusted and unadjusted raw scores
 #' @export
@@ -49,11 +49,11 @@ idmact_subj <- function(df = NULL, df_map = NULL, raw,
   m_unadj_scale <- do.call(mcent_subj, list(unlist(unadj_scale)))
   m_adj_scale <- do.call(mcent_subj, list(unlist(adj_scale)))
 
-  # Beta subject
-  betas <- m_adj_scale - m_unadj_scale
+  # Delta subject
+  deltas <- m_adj_scale - m_unadj_scale
 
   # Output object
-  out <- list("betas" = betas,
+  out <- list("deltas" = deltas,
               "m_scale" = list("adj" = m_adj_scale,
                                "unadj" = m_unadj_scale),
               "scale" = list("adj" = adj_scale,

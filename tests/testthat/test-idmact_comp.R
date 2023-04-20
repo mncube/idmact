@@ -17,7 +17,7 @@ test_that("idmact_comp works", {
                            map_raw = map_raw,
                            map_scale = map_scale)
 
-  expect_equal(comp_mean$composite_results$betac, 0.8)
+  expect_equal(comp_mean$composite_results$deltac, 0.8)
 
   # Test raw scores in df map in lists
 
@@ -37,7 +37,7 @@ test_that("idmact_comp works", {
                                   map_raw = map_raw,
                                   map_scale = map_scale)
 
-  expect_equal(comp_dfraws_mean$composite_results$betac, 0.9)
+  expect_equal(comp_dfraws_mean$composite_results$deltac, 0.9)
 
   # Test raw scores and map in same df
 
@@ -57,7 +57,7 @@ test_that("idmact_comp works", {
                                   map_raw = map_raw,
                                   map_scale = map_scale)
 
-  expect_equal(comp_samedf_mean$composite_results$betac, 0.75)
+  expect_equal(comp_samedf_mean$composite_results$deltac, 0.75)
 
   # Test raw scores and map in seperate dfs
 
@@ -78,12 +78,6 @@ test_that("idmact_comp works", {
                                   map_raw = map_raw,
                                   map_scale = map_scale)
 
-  expect_equal(comp_samedf_mean$composite_results$betac, 0.75)
-
-
-
-
-
-
+  expect_equal(comp_samedf_mean$composite_results$deltac, 0.75)
 
 })

@@ -50,7 +50,7 @@ exam level scale scores across observations)}
 }
 \value{
 A nested list containing both composite and subject level results.
-Composite results include betac, a list of summarized composite scale scores
+Composite results include deltac, a list of summarized composite scale scores
 (adjusted and unadjusted), and composite level scale scores (adjusted and
 unadjusted). Subject level results consist of the outcomes obtained from
 idmact_subj for each subject.
