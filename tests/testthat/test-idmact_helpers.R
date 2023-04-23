@@ -24,6 +24,25 @@ test_that("adjust_raw_scores works", {
   expect_equal(sum(df$Score3), sum(df$Score) + 60)
 })
 
+test_that("adjust_raw_scores works with anonymous functions", {
+  # Test with df = NULL
+  raw_scores <- list(1, 2, 3) #Set raw scores
+  adj_scores <- adjust_raw_scores(raw = raw_scores, inc = function(x)sum(x + 1)) #Increment raw scores
+  # Sum over incremented raw scores
+  expect_equal(sum(unlist(adj_scores)), 9)
+
+  # Create test data
+  df <- data.frame(Id = list(1:20),
+                   Score = rep(11:15, 4))
+  # Increment scores by 1
+  df$Score1 <- adjust_raw_scores(df, "Score", function(x)sum(x + 1))
+
+  # Test that a total of 20 was added to Score (once for each row)
+  expect_equal(sum(df$Score1), sum(df$Score) + 20)
+
+})
+
+
 test_that("map_scores works", {
 
   #Test with df = NULL

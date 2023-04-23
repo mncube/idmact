@@ -4,7 +4,7 @@
 #' @param raw A list of raw scores, or a quoted column name from the data frame
 #' where raw scores are stored.
 #' @param inc A value used to increment raw scores in order to calculate adjusted
-#' scores
+#' scores, or an anonymous function
 #'
 #' @return A list of adjusted raw scores
 #' @export
@@ -16,12 +16,19 @@
 #' # Increment scores by 2
 #' df$AdjScore <- adjust_raw_scores(df, "RawScore", inc = 2)
 adjust_raw_scores <- function(df = NULL, raw, inc = 1){
-  if(is.null(df)){
-    raw <- lapply(raw, function(x)sum(x,inc))
+  if (is.function(inc)) {
+    if (is.null(df)) {
+      raw <- lapply(raw, inc)
+    } else {
+      df$raw <- sapply(df[[raw]], inc)
+    }
   } else {
-    df$raw <- df[[raw]] + inc
+    if (is.null(df)) {
+      raw <- lapply(raw, function(x) sum(x, inc))
+    } else {
+      df$raw <- df[[raw]] + inc
+    }
   }
-
 }
 
 #' Convert Raw Scores to Scale Scores

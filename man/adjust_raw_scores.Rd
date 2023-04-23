@@ -13,7 +13,7 @@ adjust_raw_scores(df = NULL, raw, inc = 1)
 where raw scores are stored.}
 
 \item{inc}{A value used to increment raw scores in order to calculate adjusted
-scores}
+scores, or an anonymous function}
 }
 \value{
 A list of adjusted raw scores
