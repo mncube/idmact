@@ -1,13 +1,34 @@
 #' Interpreting Differences in Mean ACT Scores at the Composite Level
 #'
+#' Use the idmact_comp() function to interpret differences in composite level
+#' scores.  The algorithm is implemented as: 1) Increment the raw score for one
+#' or more subjects for each student to obtain adjusted raw scores; 2) Map
+#' adjusted raw scores to adjusted scale scores using the form's raw score to
+#' scale score map (note: perfect raw scores are always converted to the maximum
+#' allowable scale score despite the adjustment in step one); 3) Sum the adjusted
+#' scale scores for each subject area, divide this sum by the number of subject
+#' areas, and round to the nearest integer in order to obtain each
+#' observation/examinee's adjusted composite scale score; 4) Calculate the
+#' adjusted mean composite scale score across all observations (m_adj);
+#' 5) Calculate the unadjusted mean composite scale score across all observations
+#' (m_unadj); 6) Compute the difference between the adjusted and unadjusted mean
+#' composite scale scores to obtain delta composite: deltac = m_adj - m_unadj
+#'
+#' The default idmact_comp() parameter values for inc, mcent_subj, mcent_obs, and
+#' mcent_comp provide an implementation of the algorithm aligned with the main
+#' method presented in Schiel (1998)
+#' <https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf>;
+#' however, these parameters can also take arbitrary anonymous functions for users
+#' wishing to use modified implementations of the algorithm.
+#'
 #' @param df An optional data frame containing a variable for raw scores
 #' @param df_map A data frame that maps raw scores to their corresponding scale
 #' scores
 #' @param raw A list containing either a list of raw scores for each subject, or
 #' quoted column names from the data frame where raw scores for each subject are
 #' stored
-#' @param inc A list of values used to increment raw scores for each subject, in
-#' order to calculate adjusted scores
+#' @param inc A value used to increment raw scores in order to calculate adjusted
+#' scores, or an anonymous function
 #' @param map_raw A nested list where each sublist contains the domain of raw
 #' scores for a subject's raw-to-scale score mapping, or quoted column names from
 #' either df or df_map representing the subject area domains

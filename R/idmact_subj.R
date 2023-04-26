@@ -1,12 +1,28 @@
 #' Interpreting Differences in Mean ACT Scores at the Subject Level
 #'
+#' Use the idmact_subj() function to interpret differences in subject level scores.
+#' The algorithm is implemented as: 1) Increment raw scores for each student
+#' in order to obtain adjusted raw scores; 2) Map adjusted raw scores to adjusted
+#' scale scores using the form's raw score to scale score map (note: perfect raw
+#' scores are always converted to the maximum allowable scale score despite the
+#' adjustment in step one); 3) Calculate the adjusted mean scale score across all
+#' observations (m_adj); 4) Calculate the unadjusted mean scale score across all
+#' observations (m_unadj); 5) Compute the difference between the adjusted and
+#' unadjusted mean scale scores to obtain delta subject: deltas = m_adj - m_unadj
+#'
+#' The default idmact_subj() parameter values for inc and mcent_subj provide an
+#' implementation of the algorithm aligned with the main method presented in Schiel
+#' (1998) <https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf>;
+#' however, these parameters can also take arbitrary anonymous functions for users
+#' wishing to use modified implementations of the algorithm.
+#'
 #' @param df An optional data frame containing a variable for raw scores
 #' @param df_map A data frame that maps raw scores to their corresponding scale
 #' scores
 #' @param raw A list of raw scores, or a quoted column name from the data frame
 #' where raw scores are stored.
 #' @param inc A value used to increment raw scores in order to calculate adjusted
-#' scores
+#' scores, or an anonymous function
 #' @param map_raw A list containing the domain of raw scores for the raw-to-scale
 #' score mapping, or a quoted column name from either df or df_map that represents
 #' this domain

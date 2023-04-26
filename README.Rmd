@@ -46,7 +46,7 @@ to scale score map (note: perfect raw scores are always converted to the maximum
 allowable scale score despite the adjustment in step one).
 
 3.  Sum the adjusted scale scores for each subject area, divide this sum by the
-the number of subject areas, and round to the nearest integer in order to obtain
+number of subject areas, and round to the nearest integer in order to obtain
 each observation/examinee's adjusted composite scale score.
 
 4.  Calculate the adjusted mean composite scale score across all observations
