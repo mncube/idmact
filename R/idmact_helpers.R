@@ -102,7 +102,8 @@ map_scores <- function(df = NULL, df_map = NULL, conv, map_raw, map_scale,
         out <- map_obj
       } else {
         if (is.null(df_map)){
-          out <- as.list(unique(df[[map_obj]]))
+          #out <- as.list(unique(df[[map_obj]]))
+          out <- as.list(df[[map_obj]])
         } else {
           out <- as.list(unique(df_map[[map_obj]]))
         }
@@ -126,6 +127,9 @@ map_scores <- function(df = NULL, df_map = NULL, conv, map_raw, map_scale,
         } else {
           idx <- which(map_raw == score)
           if (length(idx) > 0) {
+            if(length(idx) > 1){
+              idx <- idx[[1]]
+            }
             return(map_scale[idx])
           } else {
             return(NA)
