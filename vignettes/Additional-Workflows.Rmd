@@ -141,3 +141,40 @@ cat("Form B subject level delta:", resB$deltas)
 ```
 
 
+## Custom Functions
+
+As the name suggests, the the Schiel (1998) https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf algorithm for interpreting differences beween mean ACT assessment scores is an algorithm
+focused on the mean.  However, to facilitate development and experimentation,
+the functions in the idmact package have parameters where the user can enter
+anonymous functions instead of using the default (i.e., the mean).  
+
+The example below presents an implementation of the idmact algorithm which
+focuses on the medians.  In this example, we use the df, df_raw_A, and df_raw_B
+data frames from the previous example.
+
+First, run idmact_subj and switch the mcent_subj function to median
+
+```{r}
+resA <- idmact_subj(df = df,
+                    df_map = df_raw_A,
+                    raw = "scores",
+                    map_raw = "raw",
+                    map_scale = "scale",
+                    mcent_subj = function(x) median(x, na.rm = TRUE))
+
+
+resB <- idmact_subj(df = df,
+                    df_map = df_raw_B,
+                    raw = "scores",
+                    map_raw = "raw",
+                    map_scale = "scale",
+                    mcent_subj = function(x) median(x, na.rm = TRUE))
+```
+
+
+Now, run the comparisons:
+
+```{r}
+cat("Form A subject level delta:", resA$deltas, "\n")
+cat("Form B subject level delta:", resB$deltas)
+```
