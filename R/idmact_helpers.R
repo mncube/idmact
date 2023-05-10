@@ -105,7 +105,8 @@ map_scores <- function(df = NULL, df_map = NULL, conv, map_raw, map_scale,
           #out <- as.list(unique(df[[map_obj]]))
           out <- as.list(df[[map_obj]])
         } else {
-          out <- as.list(unique(df_map[[map_obj]]))
+          #out <- as.list(unique(df_map[[map_obj]]))
+          out <- as.list(df_map[[map_obj]])
         }
       }
     }

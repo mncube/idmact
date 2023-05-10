@@ -87,6 +87,57 @@ cat("Form B subject level delta:", resB$deltas)
 ```
 
 
-<!-- ## Using df and df -->
-<!-- In some situations it may make sense to use the workflow described above; however, -->
-<!-- it will usually be more useful to k -->
+## Using df and df_map
+In some situations it may make sense to use the workflow described above; however,
+it will usually be more useful to both df and df_map.  Using the same raw data
+as and maps as the previous example
+
+```{r}
+# First make sure the information in map_raw_formA and map_raw_formB is the same
+# length as the information in map_scale
+map_raw_formA <- as.character(alist(1-5, 6-20, 21-25, 26-40, 41-45, 46-50, 51-55,
+                   56-75, 76-80, 81-85, 86-90, 91-100))
+
+map_raw_formB <- as.character(alist(1-10, 11-20, 21-30, 31-40, 41-50, 51-55, 56-65,
+                   66-75, 76-85, 86-90, 91-95, 96-100))
+
+# Then form the df_raw data frames
+df_raw_A <- data.frame(raw = map_raw_formA,
+                       scale = map_scale)
+df_raw_A <- map_elongate_df(df_raw_A, "raw", "scale")
+
+df_raw_B <- data.frame(raw = map_raw_formB,
+                       scale = map_scale)
+df_raw_B <- map_elongate_df(df_raw_B, "raw", "scale")
+
+# Now the df data frame only needs to hold the raw scores
+df <- data.frame(scores = unlist(raw_scores))
+```
+
+
+Next, run the subject level algorithm as follows:
+
+```{r}
+resA <- idmact_subj(df = df,
+                    df_map = df_raw_A,
+                    raw = "scores",
+                    map_raw = "raw",
+                    map_scale = "scale")
+
+
+resB <- idmact_subj(df = df,
+                    df_map = df_raw_B,
+                    raw = "scores",
+                    map_raw = "raw",
+                    map_scale = "scale")
+```
+
+
+Now, run the comparison as before:
+
+```{r}
+cat("Form A subject level delta:", resA$deltas, "\n")
+cat("Form B subject level delta:", resB$deltas)
+```
+
+
