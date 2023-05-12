@@ -11,7 +11,8 @@ idmact_subj(
   inc = 1,
   map_raw,
   map_scale,
-  mcent_subj = function(x) mean(x, na.rm = TRUE)
+  mcent_subj = function(x) mean(x, na.rm = TRUE),
+  na.rm.max = TRUE
 )
 }
 \arguments{
@@ -36,6 +37,10 @@ that represents this range}
 
 \item{mcent_subj}{An anonymous function that defines the measure of central
 tendency to be used}
+
+\item{na.rm.max}{Pass the na.rm argument to the map_scores' max function for
+computing the maximum raw and scale values in the mapping, taking into account
+the handling of missing values}
 }
 \value{
 A nested list containing deltas, a summary of scale scores as a list

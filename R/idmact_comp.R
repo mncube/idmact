@@ -43,6 +43,9 @@
 #' @param mcent_comp An anonymous function defining the measure of central
 #' tendency used to summarize composite level scale scores (i.e., summarizing
 #' exam level scale scores across observations)
+#' @param na.rm.max Pass the na.rm argument to the map_scores' max function for
+#' computing the maximum raw and scale values in the mapping, taking into account
+#' the handling of missing values
 #'
 #' @return A nested list containing both composite and subject level results.
 #' Composite results include deltac, a list of summarized composite scale scores
@@ -65,7 +68,8 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
                         inc, map_raw, map_scale,
                         mcent_subj = function(x) mean(x, na.rm = TRUE),
                         mcent_obs = function(x) round(sum(x) / length(x)),
-                        mcent_comp = function(x) mean(x, na.rm = TRUE)){
+                        mcent_comp = function(x) mean(x, na.rm = TRUE),
+                        na.rm.max = TRUE){
 
   # Find the maximum length among raw, inc, map_raw, and map_scale
   max_len <- max(length(raw), length(inc), length(map_raw), length(map_scale))
@@ -95,7 +99,8 @@ idmact_comp <- function(df = NULL, df_map = NULL, raw,
     subj_results <- idmact_subj(df, df_map, raw = raw[[subj]],
                                 inc = inc[[subj]], map_raw = map_raw[[subj]],
                                 map_scale = map_scale[[subj]],
-                                mcent_subj = mcent_subj)
+                                mcent_subj = mcent_subj,
+                                na.rm.max = na.rm.max)
 
     # Store results for each subject
     subjr[[subj]] <- subj_results

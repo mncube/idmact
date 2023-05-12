@@ -31,6 +31,9 @@
 #' that represents this range
 #' @param mcent_subj An anonymous function that defines the measure of central
 #' tendency to be used
+#' @param na.rm.max Pass the na.rm argument to the map_scores' max function for
+#' computing the maximum raw and scale values in the mapping, taking into account
+#' the handling of missing values
 #'
 #' @return A nested list containing deltas, a summary of scale scores as a list
 #' (adjusted and unadjusted), a list of adjusted and unadjusted scale scores,
@@ -45,19 +48,24 @@
 #'             map_raw = map_raw,
 #'             map_scale = map_scale)
 idmact_subj <- function(df = NULL, df_map = NULL, raw,
-                        inc = 1, map_raw, map_scale, mcent_subj = function(x) mean(x, na.rm = TRUE)){
+                        inc = 1, map_raw, map_scale,
+                        mcent_subj = function(x) mean(x, na.rm = TRUE),
+                        na.rm.max = TRUE){
 
   # Adjusted raw scores
   adj <- adjust_raw_scores(df, raw , inc)
 
   # Scale scores
-  unadj_scale <- map_scores(df, df_map, conv = raw, map_raw, map_scale)
+  unadj_scale <- map_scores(df, df_map, conv = raw, map_raw, map_scale,
+                            na.rm.max = na.rm.max)
   if (is.null(df)){
-    adj_scale <- map_scores(df, df_map, conv = adj, map_raw, map_scale)
+    adj_scale <- map_scores(df, df_map, conv = adj, map_raw, map_scale,
+                            na.rm.max = na.rm.max)
   } else{
     raw <- df[[raw]]
     df$adj <- adj
-    adj_scale <- map_scores(df, df_map, conv = "adj", map_raw, map_scale)
+    adj_scale <- map_scores(df, df_map, conv = "adj", map_raw, map_scale,
+                            na.rm.max = na.rm.max)
   }
 
 
