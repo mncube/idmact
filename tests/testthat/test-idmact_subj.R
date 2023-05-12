@@ -99,7 +99,7 @@ test_that("idmact_subj sanity check: small hand calculation", {
 
 
 test_that("idmact_subj sanity check: reverse maps give equal magnitude opposite
-          delta for symmetric constant liraw scores", {
+          delta for symmetric constant raw scores", {
 
             # Test 2s and 4s
             raw1 = list(2,2,2)

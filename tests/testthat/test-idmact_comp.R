@@ -81,3 +81,24 @@ test_that("idmact_comp works", {
   expect_equal(comp_samedf_mean$composite_results$deltac, 0.75)
 
 })
+
+
+test_that("idmact_comp sanity check: reverse maps with symmetric constant raw
+          scores gives a deltac of 0", {
+
+            # Test 2s and 4s
+            raw1 = list(2,2,2)
+            map_raw1 = list(1,2, 3, 4, 5)
+            map_scale1 = list(10, 20, 30, 40, 50)
+
+            raw2 = list(4,4,4)
+            map_raw2 = list(1,2, 3, 4, 5)
+            map_scale2 = list(50, 40, 30, 20, 10)
+
+            inc = list(1 , 1)
+
+            expect_equal(idmact_comp(raw = list(raw1, raw2),
+                                     map_raw = list(map_raw1, map_raw2),
+                                     map_scale = list(map_scale1, map_scale2),
+                                     inc = inc)$composite_results$deltac, 0)
+            })
