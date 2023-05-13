@@ -4,19 +4,18 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Mackson", "Ncube", , "macksonncube.stats@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Using an analytic method to investigate the difference between mean
-  scale scores and raw scale scores for different forms of an assessment can be
-  challenging due to different maps between raw scores and scale scores for
-  different forms, complex mathematical relationships between raw scores and
-  scale scores, the inclusion of adjustments based on judgemental procedures,
-  and different equating functions being used on different forms of the assessment.
-  Another approach is to run simulations to investigate the the effect that
-  incrementing raw scores has on mean scale scores. The 'idmact' package provides
-  an implementation of the algorithm outlined in Schiel(1998)
+Description: Interpreting the differences between mean scale scores across various
+  forms of an assessment can be challenging. This difficulty arises from different
+  mappings between raw scores and scale scores, complex mathematical relationships,
+  adjustments based on judgmental procedures, and diverse equating functions applied
+  to different assessment forms. An alternative method involves running simulations
+  to explore the effect of incrementing raw scores on mean scale scores. The
+  'idmact' package provides an implementation of this approach based on the
+  algorithm detailed in Schiel (1998)
   <https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf>. The
-  idmact_subj() function provides a framework for running simulations on subject
-  level scores while the idmact_comp() function provides a framework for running
-  simulations on composite scores.
+  function idmact_subj() within the package offers a framework for running
+  simulations on subject-level scores. In contrast, the idmact_comp() function
+  provides a framework for conducting simulations on composite scores.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
