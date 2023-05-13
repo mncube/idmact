@@ -117,3 +117,43 @@ test_that("idmact_subj sanity check: reverse maps give equal magnitude opposite
                                       map_raw = map_raw2,
                                       map_scale = map_scale2)$deltas)
 })
+
+
+test_that("README Single Subject Example", {
+  # Create 100 raw scores
+  set.seed(279)
+  raw_scores <- as.list(sample(1:100, 100, replace = TRUE))
+
+  # Map between raw scores and scale scores for each form
+
+  ## Each form has scale scores ranging from 1 to 12
+  map_scale <- c(1:12)
+
+  ## Each assessment has raw scores ranging from 1 - 100
+  map_raw_formA <- list(1:5, 6:20, 21:25, 26:40, 41:45, 46:50, 51:55,
+                        56:75, 76:80, 81:85, 86:90, 91:100)
+
+  map_raw_formB <- list(1:10, 11:20, 21:30, 31:40, 41:50, 51:55, 56:65,
+                        66:75, 76:85, 86:90, 91:95, 96:100)
+
+  formA <- map_elongate(map_raw = map_raw_formA,
+                        map_scale = map_scale)
+
+  formB <- map_elongate(map_raw = map_raw_formB,
+                        map_scale = map_scale)
+
+  resA <- idmact_subj(raw = raw_scores,
+                      map_raw = formA$map_raw,
+                      map_scale = formA$map_scale)
+
+
+  resB <- idmact_subj(raw = raw_scores,
+                      map_raw = formB$map_raw,
+                      map_scale = formB$map_scale)
+
+  expect_equal(resA$m_scale$adj - resA$m_scale$unadj,
+               resA$deltas)
+
+  expect_equal(resB$m_scale$adj - resB$m_scale$unadj,
+               resB$deltas)
+})
