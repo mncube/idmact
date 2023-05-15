@@ -14,20 +14,21 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 ```{r setup}
 library(idmact)
 ```
 
 
-This vignette walks through alternative workflows that may be useful if your data
-is not stored in lists or if you want to use an idmact-like algorithm with functions
-other than the mean.
+This vignette guides you through alternative workflows that might be applicable
+if your data is not stored in lists or if you wish to experiment with an idmact-like
+algorithm such as with functions other than the mean.
 
 ## Using df
 
-The first example repeats the idmact_subj workflow from the README example but
-here we incorporate idmact_subj's df parameter.  First, set up the data frame
-for a situation where the raw scores and the raw-to-scale map are all in the
+The first example replicates the idmact_subj workflow from the README example,
+but here we incorporate idmact_subj's df parameter. Start by setting up the data
+frame for a scenario where the raw scores and the raw-to-scale map are all in the
 same data frame.
 
 ```{r}
@@ -63,7 +64,7 @@ df_B<- data.frame(raw = unlist(formB$map_raw),
 ```
 
 
-Next, run the subject level algorithm as follows:
+Next, execute the subject-level algorithm as follows:
 
 ```{r}
 resA <- idmact_subj(df = df_A,
@@ -79,7 +80,7 @@ resB <- idmact_subj(df = df_B,
 ```
 
 
-Now, run the comparison as before:
+Now, perform the comparison:
 
 ```{r}
 cat("Form A subject level delta:", resA$deltas, "\n")
@@ -88,9 +89,10 @@ cat("Form B subject level delta:", resB$deltas)
 
 
 ## Using df and df_map
-In some situations it may make sense to use the workflow described above; however,
-it will usually be more useful to both df and df_map.  Using the same raw data
-as and maps as the previous example
+
+In some cases, it may make sense to use the workflow described above. However,
+it's generally more useful to use both df and df_map. This example uses the same
+raw data and maps as the previous example.
 
 ```{r}
 # First make sure the information in map_raw_formA and map_raw_formB is the same
@@ -115,7 +117,7 @@ df <- data.frame(scores = unlist(raw_scores))
 ```
 
 
-Next, run the subject level algorithm as follows:
+Next, execute the subject-level algorithm:
 
 ```{r}
 resA <- idmact_subj(df = df,
@@ -133,7 +135,7 @@ resB <- idmact_subj(df = df,
 ```
 
 
-Now, run the comparison as before:
+Now, perform the comparison as before:
 
 ```{r}
 cat("Form A subject level delta:", resA$deltas, "\n")
@@ -143,16 +145,19 @@ cat("Form B subject level delta:", resB$deltas)
 
 ## Custom Functions
 
-As the name suggests, the the Schiel (1998) https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf algorithm for interpreting differences beween mean ACT assessment scores is an algorithm
-focused on the mean.  However, to facilitate development and experimentation,
-the functions in the idmact package have parameters where the user can enter
-anonymous functions instead of using the default (i.e., the mean).  
+As the name suggests, the Schiel (1998)
+<https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf> algorithm
+for interpreting differences between mean ACT assessment scores focuses on the mean.
+However, to facilitate development and experimentation, the functions in the
+idmact package include parameters where the user can input anonymous functions
+instead of using the defaults.
 
-The example below presents an implementation of the idmact algorithm which
-focuses on the medians.  In this example, we use the df, df_raw_A, and df_raw_B
-data frames from the previous example.
+The example below showcases an implementation of the idmact algorithm focusing on
+medians. In this example, we use the df, df_raw_A, and df_raw_B data frames from
+the previous example.
 
-First, run idmact_subj and switch the mcent_subj function to median
+First, run idmact_subj and switch the mcent_subj function to median:
+
 
 ```{r}
 resA <- idmact_subj(df = df,
@@ -172,7 +177,7 @@ resB <- idmact_subj(df = df,
 ```
 
 
-Now, run the comparisons:
+Finally, perform the comparisons:
 
 ```{r}
 cat("Form A subject level delta:", resA$deltas, "\n")
