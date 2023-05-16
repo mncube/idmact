@@ -2,29 +2,41 @@
 % Please edit documentation in R/idmact_helpers.R
 \name{adjust_raw_scores}
 \alias{adjust_raw_scores}
-\title{Convert raw scores to adjusted raw scores}
+\title{Adjust Raw Scores}
 \usage{
 adjust_raw_scores(df = NULL, raw, inc = 1)
 }
 \arguments{
-\item{df}{An optional data frame containing a variable for raw scores}
+\item{df}{An optional data frame containing a column for raw scores. If 'df'
+is provided, 'raw' should be the name of the column in 'df' that contains the
+raw scores. If 'df' is NULL, 'raw' should be a list of raw scores. Default is
+NULL.}
 
-\item{raw}{A list of raw scores, or a quoted column name from the data frame
-where raw scores are stored.}
+\item{raw}{Either a string representing the name of the column in 'df' that
+contains the raw scores, or a list of raw scores if 'df' is NULL.}
 
-\item{inc}{A value used to increment raw scores in order to calculate adjusted
-scores, or an anonymous function}
+\item{inc}{Either a numeric value that will be added to each raw score to
+calculate the adjusted raw score, or a function that will be applied to each raw
+score to calculate the adjusted score. The function should take a single numeric
+argument and return a single numeric value.}
 }
 \value{
-A list of adjusted raw scores
+If 'df' is NULL, the function returns a list containing the the
+adjusted raw scores.  If 'df' is provided, the function returns a vector
+containing the adjusted raw scores.
 }
 \description{
-Convert raw scores to adjusted raw scores
+This function adjusts raw scores either by a fixed increment or according to
+a specified function. It can adjust scores stored in a list or within a specific
+column of a data frame.
 }
 \examples{
 # Create raw data
-df <- data.frame(Id = list(1:20),
+df <- data.frame(Id = 1:20,
 RawScore = rep(11:15, 4))
 # Increment scores by 2
 df$AdjScore <- adjust_raw_scores(df, "RawScore", inc = 2)
+
+# Adjust scores using a function
+adjust_raw_scores(df = NULL, raw = list(11:15), inc = function(x) {x^2})
 }

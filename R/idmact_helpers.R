@@ -1,20 +1,34 @@
-#' Convert raw scores to adjusted raw scores
+#' Adjust Raw Scores
 #'
-#' @param df An optional data frame containing a variable for raw scores
-#' @param raw A list of raw scores, or a quoted column name from the data frame
-#' where raw scores are stored.
-#' @param inc A value used to increment raw scores in order to calculate adjusted
-#' scores, or an anonymous function
+#' This function adjusts raw scores either by a fixed increment or according to
+#' a specified function. It can adjust scores stored in a list or within a specific
+#' column of a data frame.
 #'
-#' @return A list of adjusted raw scores
+#' @param df An optional data frame containing a column for raw scores. If 'df'
+#' is provided, 'raw' should be the name of the column in 'df' that contains the
+#' raw scores. If 'df' is NULL, 'raw' should be a list of raw scores. Default is
+#' NULL.
+#' @param raw Either a string representing the name of the column in 'df' that
+#' contains the raw scores, or a list of raw scores if 'df' is NULL.
+#' @param inc Either a numeric value that will be added to each raw score to
+#' calculate the adjusted raw score, or a function that will be applied to each raw
+#' score to calculate the adjusted score. The function should take a single numeric
+#' argument and return a single numeric value.
+#'
+#' @return If 'df' is NULL, the function returns a list containing the the
+#' adjusted raw scores.  If 'df' is provided, the function returns a vector
+#' containing the adjusted raw scores.
 #' @export
 #'
 #' @examples
 #' # Create raw data
-#' df <- data.frame(Id = list(1:20),
+#' df <- data.frame(Id = 1:20,
 #' RawScore = rep(11:15, 4))
 #' # Increment scores by 2
 #' df$AdjScore <- adjust_raw_scores(df, "RawScore", inc = 2)
+#'
+#' # Adjust scores using a function
+#' adjust_raw_scores(df = NULL, raw = list(11:15), inc = function(x) {x^2})
 adjust_raw_scores <- function(df = NULL, raw, inc = 1){
   if (is.function(inc)) {
     if (is.null(df)) {
@@ -31,30 +45,43 @@ adjust_raw_scores <- function(df = NULL, raw, inc = 1){
   }
 }
 
-#' Convert Raw Scores to Scale Scores
+#' Map Scores
 #'
-#' @param df An optional data frame containing a variable for raw scores
-#' @param df_map A data frame that maps raw scores to their corresponding scale
-#' scores
-#' @param conv A list of raw scores, or a quoted column name from the data frame
-#' where raw scores are stored.
-#' @param map_raw A list containing the domain of raw scores for the raw-to-scale
-#' score mapping, or a quoted column name from either df or df_map that represents
-#' this domain
-#' @param map_scale A list containing the range of scale scores for the
-#' raw-to-scale score mapping, or a quoted column name from either df or df_map
-#' that represents this range
-#' @param na.rm.max Pass the na.rm argument to the max function for computing the
-#' maximum raw and scale values in the mapping, taking into account the handling
-#' of missing values
+#' This function converts raw scores into scale scores using a provided mapping.
+#' The mapping can be provided directly as lists through 'map_raw' and 'map_scale',
+#' or indirectly via columns within either 'df' or 'df_map' data frames.
 #'
-#' @return A list if 'conv' is a list, or a data frame if 'conv' is a column name
+#' @param df An optional data frame containing a column for raw scores. If 'df'
+#' is provided and 'conv' is a character, 'conv' should represent the name of the
+#' column in 'df' containing the raw scores.
+#' @param df_map An optional data frame that maps raw scores to their corresponding
+#' scale scores. If 'df_map' is provided, map_raw' and 'map_scale' should represent
+#' the names of the columns in 'df_map' that describe how raw scores map to scale
+#' scores.
+#' @param conv Either a list of raw scores to be converted or a string representing
+#' the name of a column in 'df' containing the raw scores.
+#' @param map_raw Either a list containing the domain of raw scores for the
+#' raw-to-scale score mapping, or a string representing the name of a column in
+#' either 'df' or 'df_map' containing these values.
+#' @param map_scale Either a list containing the range of scale scores for the
+#' raw-to-scale score mapping, or a string representing the name of a column in
+#' either 'df' or 'df_map' containing these values.
+#' @param na.rm.max Logical. Should missing values be removed when computing the
+#' maximum raw and scale values in the mapping? Default is TRUE.
+#'
+#' @return A list of scale scores.
 #' @export
 #'
 #' @examples
-#' (bij_scale <- map_scores(conv = list(1, 2, 3, 4, 5),
-#'                         map_raw = list(1, 2, 3, 4, 5),
-#'                         map_scale = list(20, 21, 22, 23, 24)))
+#' # Convert raw scores to scale scores using lists
+#' map_scores(conv = list(1, 2, 3, 4, 5),
+#'            map_raw = list(1, 2, 3, 4, 5),
+#'            map_scale = list(20, 21, 22, 23, 24))
+#'
+#' # Convert raw scores to scale scores using a data frame
+#' df <- data.frame(Id = 1:5, RawScore = 1:5)
+#' df_map <- data.frame(Raw = 1:5, Scale = 20:24)
+#' df$ScaleScore <- map_scores(df, df_map, conv = "RawScore", map_raw = "Raw", map_scale = "Scale")
 map_scores <- function(df = NULL, df_map = NULL, conv, map_raw, map_scale,
                        na.rm.max = TRUE) {
 
