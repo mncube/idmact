@@ -2,30 +2,40 @@
 % Please edit documentation in R/map_elongation.R
 \name{map_elongate_df}
 \alias{map_elongate_df}
-\title{Elongate df_map}
+\title{Elongate Data Frame Mapping of Raw Scores to Scale Scores}
 \usage{
 map_elongate_df(df_map, map_raw, map_scale)
 }
 \arguments{
 \item{df_map}{A data frame that maps raw scores to their corresponding scale
-scores}
+scores. The 'map_raw' column should contain ranges of raw scores as strings
+(in the form, "1-5"), and the 'map_scale' column should contain the
+corresponding scale scores.}
 
-\item{map_raw}{A quoted column name from df_map containing the domain of raw
-scores for the raw-to-scale score mapping}
+\item{map_raw}{A string representing the column name in 'df_map' that contains
+the raw score ranges.}
 
-\item{map_scale}{A quoted column name from df_map containing the range of
-scale scores for the raw-to-scale score mapping}
+\item{map_scale}{A string representing the column name in 'df_map' that contains
+the scale scores.}
 }
 \value{
-A data frame
+An elongated data frame where each row represents a raw score and its
+corresponding scale score.
 }
 \description{
-Elongate df_map
+This function takes a data frame that maps raw scores to scale scores, and
+elongates it. Each raw score range in the 'map_raw' column is split into
+individual scores, and each corresponding scale score in the 'map_scale'
+column is repeated for each individual raw score. The function returns
+a new data frame with each raw score paired with its corresponding scale score.
 }
 \examples{
+# Create a data frame mapping raw score ranges to scale scores
 df_map <- data.frame(
  raw = c("1-5", "6-10"),
- scale = c(10, 11))
+ scale = c(10, 11)
+)
 # Elongate the data frame
 elongated_df <- map_elongate_df(df_map, "raw", "scale")
+print(elongated_df)
 }

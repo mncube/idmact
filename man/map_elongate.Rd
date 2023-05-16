@@ -2,25 +2,32 @@
 % Please edit documentation in R/map_elongation.R
 \name{map_elongate}
 \alias{map_elongate}
-\title{Elongate Map}
+\title{Elongate Mapping of Raw Scores to Scale Scores}
 \usage{
 map_elongate(map_raw, map_scale)
 }
 \arguments{
-\item{map_raw}{A list containing the domain of raw scores for the raw-to-scale
-score mapping}
+\item{map_raw}{A list where each element is a number or a numeric vector
+representing a set of raw scores. Each vector in 'map_raw' should have a
+corresponding element in 'map_scale'.}
 
-\item{map_scale}{A list containing the domain of raw scores for the raw-to-scale
-score mapping}
+\item{map_scale}{A list where each element represents a scale score
+corresponding to the raw scores in 'map_raw'. Each element in 'map_scale' is
+repeated times the length of the corresponding element in 'map_raw'.}
 }
 \value{
-A nested list consisting of a list of raw scores and a list of scale
+A named list with two components: 'map_raw' and 'map_scale'. Each
+component is a list representing the elongated mapping of raw scores to scale
 scores.
 }
 \description{
-Elongate Map
+This function elongates the mapping of raw scores to scale scores. Each element
+in 'map_raw' and 'map_scale' is repeated according to the length of the
+corresponding 'map_raw' element, resulting in equal-length lists of map_raw'
+and 'map_scale' scores.
 }
 \examples{
+# Elongate the mapping of raw scores (1:5 and 6:10) to scale scores (20 and 21)
 map_elongate(map_raw = list(1:5, 6:10),
-map_scale = list(20, 21))
+             map_scale = list(20, 21))
 }
