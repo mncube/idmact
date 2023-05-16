@@ -2,7 +2,7 @@
 % Please edit documentation in R/idmact_subj.R
 \name{idmact_subj}
 \alias{idmact_subj}
-\title{Interpreting Differences in Mean ACT Scores at the Subject Level}
+\title{Interpret Differences in Mean ACT Scores at the Subject Level}
 \usage{
 idmact_subj(
   df = NULL,
@@ -16,60 +16,63 @@ idmact_subj(
 )
 }
 \arguments{
-\item{df}{An optional data frame containing a variable for raw scores}
+\item{df}{An optional data frame containing the variable for raw scores.}
 
 \item{df_map}{A data frame that maps raw scores to their corresponding scale
-scores}
+scores.}
 
-\item{raw}{A list of raw scores, or a quoted column name from the data frame
-where raw scores are stored.}
+\item{raw}{A list of raw scores, or a string representing the column name in
+'df' containing raw scores.}
 
-\item{inc}{A value used to increment raw scores in order to calculate adjusted
-scores, or an anonymous function}
+\item{inc}{A numeric value used to increment raw scores to calculate adjusted
+scores, or a function to perform this incrementing operation.}
 
 \item{map_raw}{A list containing the domain of raw scores for the raw-to-scale
-score mapping, or a quoted column name from either df or df_map that represents
-this domain}
+score mapping, or a string representing the column name in 'df' or 'df_map'
+that contains this domain.}
 
 \item{map_scale}{A list containing the range of scale scores for the
-raw-to-scale score mapping, or a quoted column name from either df or df_map
-that represents this range}
+raw-to-scale score mapping, or a string representing the column name in 'df'
+or 'df_map' that contains this range.}
 
-\item{mcent_subj}{An anonymous function that defines the measure of central
-tendency to be used}
+\item{mcent_subj}{A function that defines the measure of central tendency to be used.
+The default is 'mean'.}
 
-\item{na.rm.max}{Pass the na.rm argument to the map_scores' max function for
-computing the maximum raw and scale values in the mapping, taking into account
-the handling of missing values}
+\item{na.rm.max}{A logical value. If TRUE, missing values are removed before calculating the
+maximum raw and scale values in the mapping. If FALSE, missing values are not
+removed.}
 }
 \value{
-A nested list containing deltas, a summary of scale scores as a list
-(adjusted and unadjusted), a list of adjusted and unadjusted scale scores,
-and a list of adjusted and unadjusted raw scores
+A list containing the following elements:
+\itemize{
+\item 'deltas': the difference between the mean adjusted and unadjusted scale
+scores,
+\item 'm_scale': a list with the mean adjusted ('adj') and unadjusted ('unadj')
+scale scores,
+\item 'scale': a list with the individual adjusted ('adj') and unadjusted ('unadj')
+scale scores,
+\item 'raw': a list with the individual adjusted ('adj') and unadjusted ('unadj')
+raw scores.
+}
 }
 \description{
-Use the idmact_subj() function to interpret differences in subject level scores.
-The algorithm is implemented as: 1) Increment raw scores for each student
-in order to obtain adjusted raw scores; 2) Map adjusted raw scores to adjusted
-scale scores using the form's raw score to scale score map (note: perfect raw
-scores are always converted to the maximum allowable scale score despite the
-adjustment in step one); 3) Calculate the adjusted mean scale score across all
-observations (m_adj); 4) Calculate the unadjusted mean scale score across all
-observations (m_unadj); 5) Compute the difference between the adjusted and
-unadjusted mean scale scores to obtain delta subject: deltas = m_adj - m_unadj
-}
-\details{
-The default idmact_subj() parameter values for inc and mcent_subj provide an
-implementation of the algorithm aligned with the main method presented in Schiel
-(1998) \url{https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf};
-however, these parameters can also take arbitrary anonymous functions for users
-wishing to use modified implementations of the algorithm.
+This function implements an algorithm to analyze differences in subject level
+scores.It first adjusts raw scores for each student, maps these adjusted raw
+scores to scale scores using the provided raw-to-scale score mapping (note:
+perfect raw scores are always converted to the maximum allowable scale score
+despite the adjustment in the previous step), then calculates the mean adjusted
+and unadjusted scale scores across all observations. The difference (delta)
+between these two mean scores is then computed. The adjustment and calculation
+method follows Schiel's (1998)
+\url{https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf}
+methodology, but can also be customized with user-defined parameters and
+functions.
 }
 \examples{
-raw = list(1, 2, 3, 4, 5)
-map_raw = list(1, 2, 3, 4, 5)
-map_scale = list(20, 21, 22, 23, 24)
-idmact_subj(raw = raw,
-            map_raw = map_raw,
-            map_scale = map_scale)
+raw_scores = list(1, 2, 3, 4, 5)
+map_raw_scores = list(1, 2, 3, 4, 5)
+map_scale_scores = list(20, 21, 22, 23, 24)
+idmact_subj(raw = raw_scores,
+            map_raw = map_raw_scores,
+            map_scale = map_scale_scores)
 }
