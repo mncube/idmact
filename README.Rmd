@@ -141,9 +141,23 @@ cat("Form B subject level delta:", resB$deltas)
 ```
 
 
-The higher value for Form A suggests that if each student were to answer one
-additional item correctly, the mean scale score for Form A would increase more
-than that of Form B.
+In this section, the function idmact_subj is used to calculate the 'delta' for
+each form (A and B). The 'delta' is the difference between the mean adjusted scale
+score and the mean unadjusted scale score. This 'delta' value provides an estimate
+of how much the mean scale score would increase if every student were to answer
+one additional item correctly on the test.
+
+In the provided example:
+
+For Form A, the subject level delta is 0.11, meaning the mean scale score is expected
+to increase by 0.11 if every student answers one additional item correctly.
+
+For Form B, the subject level delta is 0.1, suggesting that the mean scale score
+would increase by 0.1 under the same conditions.
+
+The results indicate that Form A is more responsive to increases in raw scores,
+as a one unit increase in raw score leads to a larger increase in the mean scale
+score for Form A compared to Form B.
 
 ## Composite Example
 
@@ -200,9 +214,42 @@ cat("Form B composite level delta:", resB_comp$composite_results$deltac)
 ```
 
 
+In the composite example, two subjects are considered instead of one, and the
+idmact_comp function is used to calculate the composite level delta (deltac).
+The composite level delta is calculated in a similar way to the subject level delta,
+but it considers the total adjusted and unadjusted scale scores across all subjects,
+rather than just one.
+
+In the provided example:
+
+For both Form A and Form B, the composite level delta is 0.08. This means that if
+every student were to answer one additional item correctly on each form, the mean
+composite scale score is expected to increase by 0.08.
+
+This suggests that, when considering multiple subjects, both Form A and Form B
+respond similarly to increases in raw scores.
+
 ### See Subject Area 2 Results
 
 ```{r}
 cat("Form A subject area 2 delta:", resA_comp$subject_results[[2]]$deltas, "\n")
 cat("Form B subject area 2 delta:", resB_comp$subject_results[[2]]$deltas)
 ```
+
+
+This section presents the 'delta' for the second subject area specifically. The 
+'delta' for the second subject area is calculated in the same way as the subject
+level delta mentioned in the first section, but it only considers the scores for
+the second subject.
+
+In the provided example:
+
+For Form A, the subject area 2 delta is 0.05, suggesting that the mean scale score
+for the second subject would increase by 0.05 if every student answered one additional
+item correctly.
+
+For Form B, the subject area 2 delta is 0.08, meaning that the mean scale score
+for the second subject would increase by 0.08 under the same conditions.
+
+These results indicate that, for the second subject area specifically, Form B is
+more responsive to increases in raw scores.
