@@ -6,12 +6,19 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of idmact is to provide an implementation of the Schiel (1998)
-<https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf>
+The goal of idmact is to provide an implementation of the [Schiel
+(1998)](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf)
 algorithm for interpreting differences between mean ACT assessment
 scores.
 
 ## Installation
+
+You can install the released version of idmact from
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("idmact")
+```
 
 You can install the development version of idmact from
 [GitHub](https://github.com/) with:

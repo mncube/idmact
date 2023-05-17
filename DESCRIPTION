@@ -2,20 +2,19 @@ Package: idmact
 Title: Interpreting Differences Between Mean ACT Scores
 Version: 0.0.0.9000
 Authors@R: 
-    person("Mackson", "Ncube", , "macksonncube.stats@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    person("Mackson", "Ncube", , "macksonncube.stats@gmail.com", role = c("aut", "cre", "cph"))
 Description: Interpreting the differences between mean scale scores across various
-  forms of an assessment can be challenging. This difficulty arises from different
-  mappings between raw scores and scale scores, complex mathematical relationships,
-  adjustments based on judgmental procedures, and diverse equating functions applied
-  to different assessment forms. An alternative method involves running simulations
-  to explore the effect of incrementing raw scores on mean scale scores. The
-  'idmact' package provides an implementation of this approach based on the
-  algorithm detailed in Schiel (1998)
-  <https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf>. The
-  function idmact_subj() within the package offers a framework for running
-  simulations on subject-level scores. In contrast, the idmact_comp() function
-  provides a framework for conducting simulations on composite scores.
+    forms of an assessment can be challenging. This difficulty arises from different
+    mappings between raw scores and scale scores, complex mathematical relationships,
+    adjustments based on judgmental procedures, and diverse equating functions applied
+    to different assessment forms. An alternative method involves running simulations
+    to explore the effect of incrementing raw scores on mean scale scores. The
+    'idmact' package provides an implementation of this approach based on the
+    algorithm detailed in Schiel (1998)
+    <https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf>. The
+    function idmact_subj() within the package offers a framework for running
+    simulations on subject-level scores. In contrast, the idmact_comp() function
+    provides a framework for conducting simulations on composite scores.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
