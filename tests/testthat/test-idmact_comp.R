@@ -200,3 +200,30 @@ test_that("README Composite Example", {
   expect_equal(resB_comp$composite_results$deltac, deltacB)
 
 })
+
+
+test_that("idmact_comp's mcen_obs works as expected", {
+  # Test all list inputs
+
+  # Inputs
+  raw = list(list(1, 2, 3, 4, 5), list(1, 1, 1, 1, 1))
+  inc = list(1 , 1)
+  map_raw = list(list(1, 2, 3, 4, 5))
+  map_scale = list(list(20, 21, 22, 23, 24))
+
+  comp_mean1 <- idmact_comp(raw = raw,
+                           inc = inc,
+                           map_raw = map_raw,
+                           map_scale = map_scale)
+
+  comp_mean2 <- idmact_comp(raw = raw,
+                            inc = inc,
+                            map_raw = map_raw,
+                            map_scale = map_scale,
+                            mcent_obs = function(x) round(mean(x)))
+
+
+
+  expect_equal(comp_mean1$composite_results$deltac,
+               comp_mean2$composite_results$deltac)
+  })
