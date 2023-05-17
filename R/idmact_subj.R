@@ -7,10 +7,8 @@
 #' despite the adjustment in the previous step), then calculates the mean adjusted
 #' and unadjusted scale scores across all observations. The difference (delta)
 #' between these two mean scores is then computed. The adjustment and calculation
-#' method follows Schiel's (1998)
-#' <https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf>
-#' methodology, but can also be customized with user-defined parameters and
-#' functions.
+#' method follows Schiel's (1998) methodology, but can also be customized with
+#' user-defined parameters and functions.
 #'
 #' @param df An optional data frame containing the variable for raw scores.
 #' @param df_map A data frame that maps raw scores to their corresponding scale
@@ -41,6 +39,11 @@
 #' * 'raw': a list with the individual adjusted ('adj') and unadjusted ('unadj')
 #' raw scores.
 #' @export
+#'
+#' @references
+#' Schiel, J. C. (1998). Interpreting differences in ACT composite scores
+#' (ACT Research Report Series 98-1). ACT, Inc. URL:
+#' https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf
 #'
 #' @examples
 #' raw_scores = list(1, 2, 3, 4, 5)

@@ -18,72 +18,79 @@ idmact_comp(
 )
 }
 \arguments{
-\item{df}{An optional data frame containing a variable for raw scores}
+\item{df}{A data frame containing raw scores (optional). If provided, the 'raw'
+parameter should contain column names from this data frame.}
 
-\item{df_map}{A data frame that maps raw scores to their corresponding scale
-scores}
+\item{df_map}{A data frame mapping raw scores to scale scores.}
 
-\item{raw}{A list containing either a list of raw scores for each subject, or
-quoted column names from the data frame where raw scores for each subject are
-stored}
+\item{raw}{A list of raw scores for each subject, or column names from 'df'
+where raw scores are stored.}
 
-\item{inc}{A value used to increment raw scores in order to calculate adjusted
-scores, or an anonymous function}
+\item{inc}{A value or function used to increment raw scores for adjusted score
+calculation. This can be a single value or a list of values for each subject.}
 
-\item{map_raw}{A nested list where each sublist contains the domain of raw
-scores for a subject's raw-to-scale score mapping, or quoted column names from
-either df or df_map representing the subject area domains}
+\item{map_raw}{Column names from 'df' or 'df_map' representing the domain of
+raw scores, or a list of such domains.}
 
-\item{map_scale}{A nested list where each sublist contains the range of scale
-scores for a subject's raw-to-scale score mapping, or quoted column names from
-either df or df_map representing the subject area ranges}
+\item{map_scale}{Column names from 'df' or 'df_map' representing the range of
+scale scores, or a list of such ranges.}
 
-\item{mcent_subj}{An anonymous function specifying the measure of central
-tendency used to summarize scale scores at the subject level}
+\item{mcent_subj}{A function summarizing scale scores at the subject level
+(default is mean with NA removal).}
 
-\item{mcent_obs}{An anonymous function used to summarize scale scores at the
-observation level (i.e., summary within each observation/examinee across
-subjects)}
+\item{mcent_obs}{A function summarizing scale scores at the examinee level
+(default is round(mean)).}
 
-\item{mcent_comp}{An anonymous function defining the measure of central
-tendency used to summarize composite level scale scores (i.e., summarizing
-exam level scale scores across observations)}
+\item{mcent_comp}{A function summarizing composite level scale scores
+(default is mean with NA removal).}
 
-\item{na.rm.max}{Pass the na.rm argument to the map_scores' max function for
-computing the maximum raw and scale values in the mapping, taking into account
-the handling of missing values}
+\item{na.rm.max}{A boolean indicating whether to remove NA values when computing
+maximum raw and scale values in the mapping.}
 }
 \value{
-A nested list containing both composite and subject level results.
-Composite results include deltac, a list of summarized composite scale scores
-(adjusted and unadjusted), and composite level scale scores (adjusted and
-unadjusted). Subject level results consist of the outcomes obtained from
-idmact_subj for each subject.
+A list containing composite and subject level results.
+"composite_results" includes the difference between the adjusted and unadjusted
+mean composite scale scores (deltac), the mean adjusted and unadjusted composite
+scale scores (mscale), and a list of individual adjusted and unadjusted composite
+scale scores (scale). "subject_results" includes the outcomes from idmact_subj
+for each subject.
 }
 \description{
-Use the idmact_comp() function to interpret differences in composite level
-scores.  The algorithm is implemented as: 1) Increment the raw score for one
-or more subjects for each student to obtain adjusted raw scores; 2) Map
-adjusted raw scores to adjusted scale scores using the form's raw score to
-scale score map (note: perfect raw scores are always converted to the maximum
-allowable scale score despite the adjustment in step one); 3) Sum the adjusted
-scale scores for each subject area, divide this sum by the number of subject
-areas, and round to the nearest integer in order to obtain each
-observation/examinee's adjusted composite scale score; 4) Calculate the
-adjusted mean composite scale score across all observations (m_adj);
-5) Calculate the unadjusted mean composite scale score across all observations
-(m_unadj); 6) Compute the difference between the adjusted and unadjusted mean
-composite scale scores to obtain delta composite: deltac = m_adj - m_unadj
+The idmact_comp() function calculates and interprets differences in ACT composite
+scores. The function operates in the following steps:
+\enumerate{
+\item Increment raw scores for one or more subjects for each student to obtain
+adjusted raw scores.
+\item Map adjusted raw scores to adjusted scale scores using the form's raw score
+to scale score map.
+\item Obtain each examinee's adjusted composite scale score by averaging the
+adjusted scale scores across subjects.
+\item Calculate the adjusted and unadjusted mean composite scale scores across
+all observations.
+\item Compute the difference between the adjusted and unadjusted mean composite
+scale scores.
+}
 }
 \details{
-The default idmact_comp() parameter values for inc, mcent_subj, mcent_obs, and
-mcent_comp provide an implementation of the algorithm aligned with the main
-method presented in Schiel (1998)
-\url{https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf};
-however, these parameters can also take arbitrary anonymous functions for users
-wishing to use modified implementations of the algorithm.
+By default, the function parameters align with the method presented in Schiel
+(1998). However, you can specify arbitrary anonymous functions for different
+implementations.
 }
 \examples{
+# Example 1: Using df and df_map
+df <- data.frame(raw1 = c(1, 2, 3), raw2 = c(1, 1, 1))
+df_map <- data.frame(map_raw1 = c(1, 2, 3),
+                     map_scale1 = c(20, 21, 22),
+                     map_raw2 = c(1, 1, 1),
+                     map_scale2 = c(20, 20, 20))
+comp_mean <- idmact_comp(df = df,
+                         df_map = df_map,
+                         raw = c("raw1", "raw2"),
+                         inc = 1,
+                         map_raw = c("map_raw1", "map_raw2"),
+                         map_scale = c("map_scale1", "map_scale2"))
+
+# Example 2: Using lists
 raw = list(list(1, 2, 3, 4, 5), list(1, 1, 1, 1, 1))
 inc = list(1 , 1)
 map_raw = list(list(1, 2, 3, 4, 5))
@@ -92,4 +99,9 @@ comp_mean <- idmact_comp(raw = raw,
                          inc = inc,
                          map_raw = map_raw,
                          map_scale = map_scale)
+}
+\references{
+Schiel, J. C. (1998). Interpreting differences in ACT composite scores
+(ACT Research Report Series 98-1). ACT, Inc. URL:
+https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf
 }

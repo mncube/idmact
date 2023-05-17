@@ -63,10 +63,8 @@ perfect raw scores are always converted to the maximum allowable scale score
 despite the adjustment in the previous step), then calculates the mean adjusted
 and unadjusted scale scores across all observations. The difference (delta)
 between these two mean scores is then computed. The adjustment and calculation
-method follows Schiel's (1998)
-\url{https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf}
-methodology, but can also be customized with user-defined parameters and
-functions.
+method follows Schiel's (1998) methodology, but can also be customized with
+user-defined parameters and functions.
 }
 \examples{
 raw_scores = list(1, 2, 3, 4, 5)
@@ -75,4 +73,9 @@ map_scale_scores = list(20, 21, 22, 23, 24)
 idmact_subj(raw = raw_scores,
             map_raw = map_raw_scores,
             map_scale = map_scale_scores)
+}
+\references{
+Schiel, J. C. (1998). Interpreting differences in ACT composite scores
+(ACT Research Report Series 98-1). ACT, Inc. URL:
+https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf
 }
