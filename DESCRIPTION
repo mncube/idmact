@@ -1,6 +1,6 @@
 Package: idmact
 Title: Interpreting Differences Between Mean ACT Scores
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     person("Mackson", "Ncube", , "macksonncube.stats@gmail.com", role = c("aut", "cre", "cph"))
 Description: Interpreting the differences between mean scale scores across various
