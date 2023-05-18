@@ -11,10 +11,12 @@ Description: Interpreting the differences between mean scale scores across vario
     to explore the effect of incrementing raw scores on mean scale scores. The
     'idmact' package provides an implementation of this approach based on the
     algorithm detailed in Schiel (1998)
-    <https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf>. The
-    function idmact_subj() within the package offers a framework for running
-    simulations on subject-level scores. In contrast, the idmact_comp() function
-    provides a framework for conducting simulations on composite scores.
+    <https://www.act.org/content/dam/act/unsecured/documents/ACT_RR98-01.pdf> which
+    was developed to help interpret differences between mean scale scores on the
+    American College Testing (ACT) assessment. The function idmact_subj() within
+    the package offers a framework for running simulations on subject-level scores.
+    In contrast, the idmact_comp() function provides a framework for conducting
+    simulations on composite scores.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
